@@ -1,25 +1,40 @@
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <title>Pathfinder Visualization by Ali, Ammar, Humza, Anas, and Taha</title>
-        <link rel="stylesheet" href="bulma.css">
-        <script src="load_html.js"></script>
-        <script>
-          load_div("navbar.html", "nav");
-          load_div("card.html", "card");
-        </script>
 
-    </head>
+<head>
+  <title>Pathfinder Visualization by Ali, Ammar, Humza, Anas, and Taha</title>
+  <link rel="stylesheet" href="bulma.css">
+  <script src="load_html.js"></script>
+  <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+  <script>
+    load_div("navbar.html", "nav");
+    load_div("card.html", "card");
+  </script>
+  <style type="text/css">
+    #mynetwork {
+      width: 1200px;
+      height: 800px;
+      border: 1px solid hsl(171, 100%, 41%);
+    }
+  </style>
+</head>
 
-    <body>
+<body>
 
-        <div id="nav"></div>
-        
-        <div class="columns">
-          <div class="column is-one-quarter">
-              <div id="card"></div>
-          </div>
-      </div>
-    </body>
+  <div id="nav"></div>
+
+  <div class="columns">
+    <div class="column is-one-quarter">
+      <div id="card"></div>
+    </div>
+    <div class="column">
+      <div id="mynetwork"></div>
+      <script>    
+      load_graph();
+      </script>
+    </div>
+  </div>
+</body>
+
 </html>
