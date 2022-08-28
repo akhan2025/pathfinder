@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <title>Pathfinder Visualization by Ali, Ammar, Humza, Anas, and Taha</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="load_html.js"></script>
+  <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+</head>
+
+<body>
+
+  <div id="nav"></div>
+  <script>load_div("navbar.html", "nav")</script>
+
+  <div class="columns">
+    <div class="column is-one-quarter">
+      <div id="card"></div>
+      <script>load_div("card.html", "card")</script>
+    </div>
+    <div class="column">
+      <div id="mynetwork"></div>
+      <script>load_graph()</script>
+    </div>
+  </div>
+</body>
+
+</html>
