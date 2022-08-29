@@ -13,7 +13,7 @@ function App() {
       <PathfindNavbar />
       <Container fluid /* Put the grid inside here to the right of homecard */>
         <HomeCard title={title} />
-        <Grid></Grid>
+        <Grid />
       </Container>
     </div>
   );
