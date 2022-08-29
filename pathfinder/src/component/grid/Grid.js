@@ -4,7 +4,7 @@ const CELL_SIZE = 20;
 const WIDTH = 800;
 const HEIGHT = 600;
 
-function gridBoard(){
+function GridBoard(){
     return (
       <div>
         {" "}
@@ -22,4 +22,4 @@ function gridBoard(){
     );
   }
 
-export default gridBoard;
+export default GridBoard;

@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import PathfindNavbar from "./Navbar";
 import HomeCard from "./StartCard";
-import gridBoard from "./component/grid/Grid";
+import GridBoard from "./component/grid/Grid";
 
 function App() {
   const title = "Pathfinding Visualization";
@@ -20,7 +20,7 @@ function App() {
             <HomeCard title={title} />
           </Col>
           <Col >
-            <gridBoard />
+            <GridBoard />
           </Col>
         </Row>
       </Container>
