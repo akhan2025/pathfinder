@@ -11,7 +11,7 @@ class Grid extends React.Component {
       <div>
         {" "}
         <div
-          className="Board"
+          className="Grid"
           style={{
             width: WIDTH,
             height: HEIGHT,
