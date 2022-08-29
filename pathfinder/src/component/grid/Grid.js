@@ -1,4 +1,5 @@
 import React from "react";
+import "./Grid.css";
 
 const CELL_SIZE = 20;
 const WIDTH = 800;
@@ -10,11 +11,11 @@ class Grid extends React.Component {
       <div>
         {" "}
         <div
-          className="Grid"
+          className="Board"
           style={{
             width: WIDTH,
             height: HEIGHT,
-            backgroundSize: "${CELL_SIZE}px ${CELL_SIZE}px",
+            backgroundSize: `${CELL_SIZE}px ${CELL_SIZE}px`,
           }}
         >
           {" "}

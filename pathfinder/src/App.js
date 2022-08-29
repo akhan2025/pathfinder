@@ -1,3 +1,4 @@
+import React from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Container from "react-bootstrap/Container";
@@ -13,8 +14,8 @@ function App() {
       <PathfindNavbar />
       <Container fluid /* Put the grid inside here to the right of homecard */>
         <HomeCard title={title} />
-        <Grid />
       </Container>
+      <Grid />
     </div>
   );
 }
