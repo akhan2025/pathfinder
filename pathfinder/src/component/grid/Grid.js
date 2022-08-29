@@ -1,8 +1,8 @@
 import "./Grid.css";
 
 const CELL_SIZE = 20;
-const WIDTH = 800;
-const HEIGHT = 600;
+const WIDTH = 1000;
+const HEIGHT = 800;
 
 function GridBoard(){
     return (
