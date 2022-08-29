@@ -1,17 +1,15 @@
-import React from "react";
 import "./Grid.css";
 
 const CELL_SIZE = 20;
 const WIDTH = 800;
 const HEIGHT = 600;
 
-class Grid extends React.Component {
-  render() {
+function gridBoard(){
     return (
       <div>
         {" "}
         <div
-          className="Board"
+          className="Grid"
           style={{
             width: WIDTH,
             height: HEIGHT,
@@ -23,6 +21,5 @@ class Grid extends React.Component {
       </div>
     );
   }
-}
 
-export default Grid;
+export default gridBoard;

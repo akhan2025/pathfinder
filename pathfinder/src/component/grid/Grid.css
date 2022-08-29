@@ -1,1 +1,9 @@
-.Grid {  position: relative;  margin: 0 auto;  background-color: #800869; background-image: linear-gradient(#333 1px, transparent 1px),    linear-gradient(90deg, #333 1px, transparent 1px);}
+.Grid {
+    position: relative;
+    margin: 0 auto;
+    background-color:
+        lightblue;
+    background-image:
+        linear-gradient(white, transparent 1px),
+        linear-gradient(90deg, white 1px, transparent 1px);
+}
