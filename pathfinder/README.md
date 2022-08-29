@@ -4,31 +4,36 @@
 
 ## Ali Khan, Ammar Zia, Anas Ahmed, Humza Noor, and Taha Baig
 
----
-
 - [Introduction](#introduction)
 - [Current Roadmap](#current-roadmap)
 - [Stretch Goals](#stretch-goals)
 
 ## Introduction
 
----
 Our goal in this project is to create a visualizer for pathfinding algorithms in real time through the browser. This will likely require no backend and run fully in JavaScript
 
 ## Current Roadmap
 
----
-
-- [ ] Research which javascript framework to use
+- [X] Research which javascript framework to use
 - 1. Pure JavaScript/TypeScript
 - 2. Angular.JS
 - 3. Vue.JS
-- [ ] Which animation Framework to use, if any
+- 4. React.JS ✅
+- [X] Create basic website to visualize testing
+- [ ] Choosing a style for website and built it out 
+- 1. Bootstrap
+- 2. Bulma
+- 3. Material UI
+- 4. Grommet
+- 5. Chakra UI
+- [ ] Which animation Framework to use, if necessart
 - 1. Anime.JS
-- 2. pts.js
-- 3. mo.js
+- 2. pts.JS
+- 3. mo.JS
 - [ ] Develop a working visual version of a graph
-  - The best way to do this I am guessing is to create a 2D array and have each cell contain a node object with vertices to each adjacent node like a graph
+  - [ ] Create Grid made out of cells
+  - [ ] Have each cell have its own state that can change
+  - [ ] Start and Target Nodes
 - [ ] Develop pathfinding algos for graph
   - Dijkstra's Algorithm
   - BFS
@@ -36,10 +41,8 @@ Our goal in this project is to create a visualizer for pathfinding algorithms in
   - a*
   - etc.
 - [ ] Implement a UI to allow for picking a pathfinding algos and/or add obstacles to the graph
-- [ ] Create explanation pages for each pathfinding algorithm
 - [ ] Done?
 
 ## Stretch Goals
-
----
-make it play doom lol
+- [ ] Create explanation pages for each pathfinding algorithm
+- [ ] make it play doom lol
