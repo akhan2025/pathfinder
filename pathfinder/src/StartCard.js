@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { Button, Box, Nav, Select, Text, Grid, Menu } from 'grommet';
+import { Button, Box, Nav, Select, Text, Grid} from 'grommet';
+import { Down } from 'grommet-icons'
 import { Sidebar } from 'grommet/components/Sidebar';
 
 const SidebarHeader = () => (
@@ -14,19 +15,6 @@ const SidebarHeader = () => (
                 this task. Try it for yourself!</Text>
         </Box>
     </Grid>
-);
-
-const SidebarButton = ({ icon, label, ...rest }) => (
-    <Box pad="small">
-        <Button
-            gap="medium"
-            alignSelf="start"
-            plain
-            icon={icon}
-            label={label}
-            {...rest}
-        />
-    </Box>
 );
 
 const SidebarFooter = () => (
@@ -46,6 +34,7 @@ function SelectAlgo() {
     const [value, setValue] = React.useState('Choose Algorithm');
     return (
         <Select
+            icon= < Down color='status-ok' />
             options={['Dijkstras', 'BFS', 'DFS', 'A*']}
             value={value}
             onChange={({ option }) => setValue(option)}
@@ -53,24 +42,27 @@ function SelectAlgo() {
     );
 }
 
-const MainNavigation = () => (
-    <Nav gap="small" responsive={false}>
-        <Box>
-            <Text>Choose Algorithm:</Text>
-            <SelectAlgo/>
-        </Box>
-    </Nav>
-);
+function MainNavigation() {
+    return (
+        <Nav gap="small" responsive={false}>
+            <Box>
+                <Text>Choose Algorithm:</Text>
+                <SelectAlgo />
+            </Box>
+        </Nav>
+    );
+}
 
 function mainSideBar() {
     return (
         <Box direction="row" height={{ min: '100%' }}>
             <Sidebar
                 responsive={false}
-                background="light-2"
+                background="light-1"
                 header={<SidebarHeader />}
                 footer={<SidebarFooter />}
                 pad={{ left: 'medium', right: 'large', vertical: 'medium' }}
+                round={[{size: "small", corner: "top" },{size: "small", corner: "bottom" }]}
             >
                 <MainNavigation />
             </Sidebar>

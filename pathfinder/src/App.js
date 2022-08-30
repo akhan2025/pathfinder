@@ -25,7 +25,7 @@ function App() {
       >
       </Box>
       <Box
-        border={{ color: 'blue', style: 'ridge'}}
+        border={{ color: 'white', style: 'hidden'}}
         gridArea="card">
         <MainSideBar/>
       
