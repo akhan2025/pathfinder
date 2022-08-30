@@ -1,4 +1,5 @@
 import Button from 'react-bootstrap/Button';
+import "./StartCard.css";
 import Card from 'react-bootstrap/Card';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
@@ -7,6 +8,7 @@ import Row from 'react-bootstrap/Row';
 
 function HomeCard({ title }) {
     return (
+        <div className='top-margin'>
         <Card style={{ width: '30rem', height:window.innerHeight - 500}}>
                 <Card.Body>
                     <Card.Title>{title}</Card.Title>
@@ -29,7 +31,10 @@ function HomeCard({ title }) {
                 <Button variant="outline-info"  size='lg'>Visualize</Button>
                 <Button variant="outline-danger" size='lg'>Clear Board</Button>
                 </div>
+        
+            
         </Card >
+    </div>
     );
 }
 
