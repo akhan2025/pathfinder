@@ -1,41 +1,85 @@
-import Button from 'react-bootstrap/Button';
-import "./StartCard.css";
-import Card from 'react-bootstrap/Card';
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
+import React, { useState } from 'react';
 
-function HomeCard({ title }) {
+import { Button, Box, Nav, Select, Text, Grid, Menu } from 'grommet';
+import { Sidebar } from 'grommet/components/Sidebar';
+
+const SidebarHeader = () => (
+    <Grid>
+        <Box align="center" gap="small" direction="row" margin={{ bottom: 'medium' }}>
+            <Text weight={'bold'}>Pathfinding Visualization</Text>
+        </Box>
+        <Box>
+            <Text>Pathfinding Algorithms look to find the shortest path between any two points.
+                Our goal with this visualizer is to showcase how many pathfinding algorithms accomplish
+                this task. Try it for yourself!</Text>
+        </Box>
+    </Grid>
+);
+
+const SidebarButton = ({ icon, label, ...rest }) => (
+    <Box pad="small">
+        <Button
+            gap="medium"
+            alignSelf="start"
+            plain
+            icon={icon}
+            label={label}
+            {...rest}
+        />
+    </Box>
+);
+
+const SidebarFooter = () => (
+    <Nav gap='small' responsive='true'>
+        <Button
+            label='Visualize'
+            color={'status-ok'}
+            hoverIndicator="status-ok" />
+        <Button
+            label='Clear Board'
+            color={'status-error'}
+            hoverIndicator="status-error" />
+    </Nav>
+);
+
+function SelectAlgo() {
+    const [value, setValue] = React.useState('Choose Algorithm');
     return (
-        <div className='top-margin'>
-        <Card style={{ width: '30rem', height:window.innerHeight - 500}}>
-                <Card.Body>
-                    <Card.Title>{title}</Card.Title>
-                    <Row>
-                        <Col >
-                            <Card.Text className="text-left">
-                                Pathfinding Algorithms look to find the shortest path between any two points.
-                                Our goal with this visualizer is to showcase how many pathfinding algorithms accomplish
-                                this task. Try it for yourself!
-                            </Card.Text>
-                        </Col>
-                    </Row>
-                    <DropdownButton id="dropdown-basic-button" title="Algorithms" variant='info'>
-                        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-                    </DropdownButton>
-                </Card.Body>
-            <div className= "d-grid gap-0">
-                <Button variant="outline-info"  size='lg'>Visualize</Button>
-                <Button variant="outline-danger" size='lg'>Clear Board</Button>
-                </div>
-        
-            
-        </Card >
-    </div>
+        <Select
+            options={['Dijkstras', 'BFS', 'DFS', 'A*']}
+            value={value}
+            onChange={({ option }) => setValue(option)}
+        />
     );
 }
 
-export default HomeCard;
+const MainNavigation = () => (
+    <Nav gap="small" responsive={false}>
+        <Box>
+            <Text>Choose Algorithm:</Text>
+            <SelectAlgo/>
+        </Box>
+    </Nav>
+);
+
+function mainSideBar() {
+    return (
+        <Box direction="row" height={{ min: '100%' }}>
+            <Sidebar
+                responsive={false}
+                background="light-2"
+                header={<SidebarHeader />}
+                footer={<SidebarFooter />}
+                pad={{ left: 'medium', right: 'large', vertical: 'medium' }}
+            >
+                <MainNavigation />
+            </Sidebar>
+        </Box>
+    );
+}
+
+mainSideBar.args = {
+    full: true,
+};
+
+export default mainSideBar

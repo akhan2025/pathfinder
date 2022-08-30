@@ -1,30 +1,46 @@
 import React from "react";
 import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import Container from "react-bootstrap/Container";
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import PathfindNavbar from "./Navbar";
-import HomeCard from "./StartCard";
-import GridBoard from "./component/grid/Grid";
+import { Box, Grid, Text } from 'grommet'
+import MainSideBar from "./StartCard";
 
 function App() {
-  const title = "Pathfinding Visualization";
 
   return (
-    <div className="App">
-      <PathfindNavbar />
-      <Container fluid /* Put the grid inside here to the right of homecard */>
-        <Row>
-          <Col sm={4}>
-            <HomeCard title={title} />
-          </Col>
-          <Col lg={8}>
-            <GridBoard />
-          </Col>
-        </Row>
-      </Container>
-    </div>
+    <Grid
+      rows={['xxsmall', 'small', 'small', 'small']}
+      columns={['medium', 'auto']}
+      areas={[
+        {name: 'nav', start:[0,0], end: [1,0]},
+        {name: 'card', start:[0,1], end: [0,3]},
+        {name: 'graph', start:[1,1], end: [1,3]}
+      ]}
+      gap="xsmall"
+    >
+      <Box
+        border={{ color: 'cyan', style: 'solid' }}
+        gridArea="nav"
+        justify="center"
+        pad="small"
+        //add navbar  in here
+      >
+      </Box>
+      <Box
+        border={{ color: 'blue', style: 'ridge'}}
+        gridArea="card">
+        <MainSideBar/>
+      
+      </Box>
+      <Box
+        border={{ color: 'border', style: 'dashed' }}
+        gridArea="graph"
+        justify="center"
+        pad="small"
+      >
+        <Text weight="bold"
+        //add graph here
+        >Footer</Text>
+      </Box>
+    </Grid>
   );
 }
 
