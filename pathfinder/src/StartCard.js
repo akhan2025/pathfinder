@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Button, Box, Nav, Select, Text, Grid} from 'grommet';
-import { Down } from 'grommet-icons'
+import { Button, Box, Nav, Select, Text, Grid } from 'grommet';
+import { Down, Flag, Home } from 'grommet-icons'
 import { Sidebar } from 'grommet/components/Sidebar';
 
 const SidebarHeader = () => (
@@ -33,23 +33,48 @@ const SidebarFooter = () => (
 function SelectAlgo() {
     const [value, setValue] = React.useState('Choose Algorithm');
     return (
-        <Select
-            icon= < Down color='status-ok' />
+        <><Text>Choose Algorithm:</Text><Select
+            icon=<Down color='status-ok' />
             options={['Dijkstras', 'BFS', 'DFS', 'A*']}
             value={value}
-            onChange={({ option }) => setValue(option)}
-        />
+            onChange={({ option }) => setValue(option)} /></>
     );
 }
 
 function MainNavigation() {
     return (
         <Nav gap="small" responsive={false}>
-            <Box>
-                <Text>Choose Algorithm:</Text>
+            <Box gap='medium'>
                 <SelectAlgo />
-            </Box>
-        </Nav>
+
+                <Grid
+                    rows={['auto', 'auto']}
+                    columns={['auto', 'auto']}
+                    areas={[
+                        { name: 'startNode', start: [0, 0], end: [0, 0] },
+                        { name: 'endNode', start: [0, 1], end: [0, 1] },
+                    ]}>
+                    <Box
+                        direction='row'
+                        gridArea="startNode"
+                        pad="small"
+                        gap='small'
+                        alignContent='start'>
+                        <Text>Start Node:</Text>
+                        <Home size="medium" />
+                    </Box>
+                    <Box
+                    direction='row'
+                        gridArea="endNode"
+                        pad="small"
+                        gap='small'
+                        alignContent='start'>
+                        <Text>End Node: </Text>
+                        <Flag size='medium'/>
+                    </Box>
+                </Grid>
+            </Box >
+        </Nav >
     );
 }
 
@@ -62,7 +87,7 @@ function mainSideBar() {
                 header={<SidebarHeader />}
                 footer={<SidebarFooter />}
                 pad={{ left: 'medium', right: 'large', vertical: 'medium' }}
-                round={[{size: "small", corner: "top" },{size: "small", corner: "bottom" }]}
+                round={[{ size: "small", corner: "top" }, { size: "small", corner: "bottom" }]}
             >
                 <MainNavigation />
             </Sidebar>
