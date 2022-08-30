@@ -14,7 +14,7 @@ function PathfindNavbar() {
       <Navbar key={expand} bg="" expand={expand} className="mb-3" fixed='top'>
         <Container fluid>
           <Navbar.Brand href="#">DBG Routing Visualization</Navbar.Brand>
-          <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
+          
           <Navbar.Offcanvas
             id={`offcanvasNavbar-expand-${expand}`}
             aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
