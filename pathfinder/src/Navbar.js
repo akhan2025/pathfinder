@@ -1,5 +1,5 @@
 import React from 'react';
-import TeamPage from './team';
+
 import { Anchor, Box, Header, Menu, Nav, ResponsiveContext, Text } from 'grommet';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
