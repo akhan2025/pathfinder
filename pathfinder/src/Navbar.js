@@ -1,49 +1,46 @@
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Offcanvas from 'react-bootstrap/Offcanvas';
+import React from 'react';
+import TeamPage from './team';
+import { Anchor, Box, Header, Menu, Nav, ResponsiveContext, Text } from 'grommet';
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
-
-function PathfindNavbar() {
+function Navigation() {
   return (
-    <>
-    {[false, 'sm', 'md', 'lg', 'xl', 'xxl'].map((expand) => (
-      <Navbar key={expand} bg="" expand={expand} className="mb-3" fixed='top'>
-        <Container fluid>
-          <Navbar.Brand href="#">DBG Routing Visualization</Navbar.Brand>
+        // Uncomment <Grommet> lines when using outside of storybook
+  // <Grommet theme={...}>
+  <Header background="neutral-2" pad="medium">
+  <Text
           
-          <Navbar.Offcanvas
-            id={`offcanvasNavbar-expand-${expand}`}
-            aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
-            placement="end"
-          >
-            <Offcanvas.Header closeButton>
-              <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
-                Options
-              </Offcanvas.Title>
-            </Offcanvas.Header>
-            <Offcanvas.Body>
-              <Nav className="justify-content-end flex-grow-1 pe-3">
-                <Nav.Link href="#action1">Meet The Team</Nav.Link>
-                <NavDropdown
-                  title="Algorithms"
-                  id={`offcanvasNavbarDropdown-expand-${expand}`}
-                >
-                  <NavDropdown.Item href="#action1">Breadth First Search (BFS)</NavDropdown.Item>
-                  <NavDropdown.Item href="#action2">Depth First Search (DFS)</NavDropdown.Item>
-                  <NavDropdown.Item href="#action3">Djikstra's Algorithm</NavDropdown.Item>
-                  <NavDropdown.Item href="#action4">A* Search</NavDropdown.Item>
-                </NavDropdown>
-              </Nav>
-            </Offcanvas.Body>
-          </Navbar.Offcanvas>
-        </Container>
-      </Navbar>
-    ))}
-  </>
+          weight="bold"
+          color="Light"
+          size='large'
+          //add graph here
+        >
+          DBG Algorithmic Pathfinding
+        </Text>
+  <ResponsiveContext.Consumer>
+    {(responsive) =>
+      responsive === 'small' ? (
+        <Menu
+          label="Click me"
+          items={[
+            { label: 'Homepage', onClick: () => {} },
+            { label: 'Who We Are', onClick: () => {} },
+            { label: 'Our Github', onClick: () => {} },
+          ]}
+        />
+      ) : (
+        <Nav direction="row">
+          <Anchor href="Home" label="Homepage" size="medium" />
+          <Anchor href="TeamPage" label="Who We Are" size="medium"/>
+          <Anchor href="https://github.com/akhan2025/pathfinder" label="Our GitHub" size="medium"  />
+          
+        </Nav>
+      )
+    }
+  </ResponsiveContext.Consumer>
+</Header>
 );
 }
-export default PathfindNavbar;
+
+export default Navigation
+
