@@ -13,7 +13,17 @@ function App() {
 
   return (
     <div className="App">
-      <GridBoard />
+      <PathfindNavbar />
+      <Container fluid /* Put the grid inside here to the right of homecard */>
+        <Row>
+          <Col sm={4}>
+            <HomeCard title={title} />
+          </Col>
+          <Col lg={8}>
+            <GridBoard />
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 }
