@@ -2,8 +2,8 @@ import "./Grid.css";
 import GridCell from "./GridCell";
 import React from "react";
 
-const WIDTH = 20;
-const HEIGHT = 20;
+const WIDTH = 10;
+const HEIGHT = 10;
 
 function GridBoard() {
   const grid = [];

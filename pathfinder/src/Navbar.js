@@ -1,35 +1,43 @@
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
+import React from 'react';
 
+import { Anchor, Header, Menu, Nav, ResponsiveContext, Text } from 'grommet';
 
-function PathfindNavbar() {
+function Navigation() {
   return (
-    <Navbar bg="light" expand="lg">
-      <Container fluid>
-        <Navbar.Brand href="#home">DBG</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Link</Nav.Link>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
-  );
+  <Header background="neutral-2" pad="medium">
+  <Text
+          
+          weight="bold"
+          color="Light"
+          size='large'
+          //add graph here
+        >
+          DBG Algorithmic Pathfinding
+        </Text>
+  <ResponsiveContext.Consumer>
+    {(responsive) =>
+      responsive === 'small' ? (
+        <Menu
+          label="Click me"
+          items={[
+            { label: 'Homepage', onClick: () => {} },
+            { label: 'Who We Are', onClick: () => {} },
+            { label: 'Our Github', onClick: () => {} },
+          ]}
+        />
+      ) : (
+        <Nav direction="row">
+          <Anchor href="Home" label="Homepage" size="medium" />
+          <Anchor href="TeamPage" label="Who We Are" size="medium"/>
+          <Anchor href="https://github.com/akhan2025/pathfinder" label="Our GitHub" size="medium"  />
+          
+        </Nav>
+      )
+    }
+  </ResponsiveContext.Consumer>
+</Header>
+);
 }
 
-export default PathfindNavbar;
+export default Navigation
+
