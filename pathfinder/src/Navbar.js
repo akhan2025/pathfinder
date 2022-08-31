@@ -1,12 +1,9 @@
 import React from 'react';
 
-import { Anchor, Box, Header, Menu, Nav, ResponsiveContext, Text } from 'grommet';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Anchor, Header, Menu, Nav, ResponsiveContext, Text } from 'grommet';
 
 function Navigation() {
   return (
-        // Uncomment <Grommet> lines when using outside of storybook
-  // <Grommet theme={...}>
   <Header background="neutral-2" pad="medium">
   <Text
           

@@ -15,13 +15,11 @@ function App() {
         { name: "graph", start: [1, 1], end: [1, 3] },
         
       ]}
-      gap="xsmall"
+      gap="medium"
     >
       <Box
-        border={{ color: "cyan", style: "solid" }}
         gridArea="nav"
         justify="center"
-        pad=""
       >
         <Nav />
       </Box>
@@ -43,7 +41,7 @@ function App() {
           weight="bold"
           //add graph here
         >
-          Footer
+          Graph
         </Text>
       </Box>
     </Grid>
