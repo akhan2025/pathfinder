@@ -1,27 +1,102 @@
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
+import React from 'react';
 
-function HomeCard({ title }) {
+import { Button, Box, Nav, Select, Text, Grid } from 'grommet';
+import { Down, Flag, Home } from 'grommet-icons'
+import { Sidebar } from 'grommet/components/Sidebar';
+
+const SidebarHeader = () => (
+    <Grid>
+        <Box align="center" gap="small" direction="row" margin={{ bottom: 'medium' }}>
+            <Text weight={'bold'}>Pathfinding Visualization</Text>
+        </Box>
+        <Box>
+            <Text>Pathfinding Algorithms look to find the shortest path between any two points.
+                Our goal with this visualizer is to showcase how many pathfinding algorithms accomplish
+                this task. Try it for yourself!</Text>
+        </Box>
+    </Grid>
+);
+
+const SidebarFooter = () => (
+    <Nav gap='small' responsive='true'>
+        <Button
+            label='Visualize'
+            color={'status-ok'}
+            hoverIndicator="status-ok" />
+        <Button
+            label='Clear Board'
+            color={'status-error'}
+            hoverIndicator="status-error" />
+    </Nav>
+);
+
+function SelectAlgo() {
+    const [value, setValue] = React.useState('Choose Algorithm');
     return (
-        <Card style={{ width: '30rem', height: window.innerHeight }}>
-            <Card.Body>
-                <Card.Title>{title}</Card.Title>
-
-                <Card.Text variant='no-wrap'/* will clean up later */>
-                    Some quick example text to build on the card title and make up the
-                    bulk of the card's content.
-                </Card.Text>
-                <DropdownButton id="dropdown-basic-button" title="Algorithms" variant='info'>
-                    <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-                </DropdownButton>
-            </Card.Body>
-
-            <Button variant="info">Visualize</Button>
-        </Card>);
+        <><Text>Choose Algorithm:</Text><Select
+            icon=<Down color='status-ok' />
+            options={['Dijkstras', 'BFS', 'DFS', 'A*']}
+            value={value}
+            onChange={({ option }) => setValue(option)} /></>
+    );
 }
 
-export default HomeCard;
+function MainNavigation() {
+    return (
+        <Nav gap="small" responsive={false}>
+            <Box gap='medium'>
+                <SelectAlgo />
+
+                <Grid
+                    rows={['auto', 'auto']}
+                    columns={['auto', 'auto']}
+                    areas={[
+                        { name: 'startNode', start: [0, 0], end: [0, 0] },
+                        { name: 'endNode', start: [0, 1], end: [0, 1] },
+                    ]}>
+                    <Box
+                        direction='row'
+                        gridArea="startNode"
+                        pad="small"
+                        gap='small'
+                        alignContent='start'>
+                        <Text>Start Node:</Text>
+                        <Home size="medium" />
+                    </Box>
+                    <Box
+                    direction='row'
+                        gridArea="endNode"
+                        pad="small"
+                        gap='small'
+                        alignContent='start'>
+                        <Text>End Node: </Text>
+                        <Flag size='medium'/>
+                    </Box>
+                </Grid>
+            </Box >
+        </Nav >
+    );
+}
+
+function mainSideBar() {
+    return (
+        <Box direction="row" height={{ min: '100%' }}>
+            <Sidebar
+                responsive={false}
+                background="light-1"
+                header={<SidebarHeader />}
+                footer={<SidebarFooter />}
+                pad={{ left: 'medium', right: 'large', vertical: 'medium' }}
+                round={[{ size: "small", corner: "top" }, { size: "small", corner: "bottom" }]}
+            >
+                <MainNavigation />
+            </Sidebar>
+        </Box>
+    );
+}
+
+mainSideBar.args = {
+    full: true,
+};
+
+export default mainSideBar
