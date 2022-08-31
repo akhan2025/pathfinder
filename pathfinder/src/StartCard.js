@@ -3,6 +3,7 @@ import React from 'react';
 import { Button, Box, Nav, Select, Text, Grid } from 'grommet';
 import { Down, Flag, Home } from 'grommet-icons'
 import { Sidebar } from 'grommet/components/Sidebar';
+import clearBoard from './component/grid/Grid'
 
 const SidebarHeader = () => (
     <Grid>
@@ -18,15 +19,16 @@ const SidebarHeader = () => (
 );
 
 const SidebarFooter = () => (
-    <Nav gap='small' responsive='true'>
+    <Nav gap='small' responsive>
         <Button
             label='Visualize'
             color={'status-ok'}
             hoverIndicator="status-ok" />
         <Button
-            label='Clear Board'
+            label='Reset Board'
             color={'status-error'}
-            hoverIndicator="status-error" />
+            hoverIndicator="status-error"
+            onClick={clearBoard} />
     </Nav>
 );
 

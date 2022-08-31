@@ -3,7 +3,10 @@ import "./GridCell.css";
 
 // Represents a single square in the grid
 
-export default function GridCell(props) {
-  const classes = `grid-cell color-${props.color}`;
-  return <div className={classes} />;
+function GridCell(props) {
+
+  const classes = `grid-cell cell-${props.type}`;
+  return <div className={classes}/>;
 }
+
+export default GridCell

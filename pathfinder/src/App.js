@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import GridBoard from "./component/grid/Grid";
+import InitializeGridBoard from "./component/grid/Grid";
 import { Box, Grid} from "grommet";
 import MainSideBar from "./StartCard";
 import Nav from "./Navbar";
@@ -38,7 +38,7 @@ function App() {
         justify="center"
         pad="small"
       >
-       <GridBoard />
+       <InitializeGridBoard />
       </Box>
     </Grid>
   );
