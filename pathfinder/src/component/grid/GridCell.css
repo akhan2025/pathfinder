@@ -5,27 +5,32 @@
     --color-0: #eaeaea;
     --color-1: lightblue;
     --color-2: #22229a;
+    --color-3: black;
   
     /* Numbers define values that will be used throughout the CSS.
     --tile-size: 20px for example will set size of the grid squares. */
-    --cols: 10;
-    --rows: 18;
-    --tile-size: 20px;
+    --cols: 20;
+    --rows: 20;
+    --tile-size: 40px;
     --border-width: 5px;
 
 }
 
 /* Colors */
-.color-0 {
+.color-start {
     background-color: var(--color-0);
 }
   
-.color-1 {
+.color-unvisited {
     background-color: var(--color-1);
 }
   
-.color-2 {
+.color-target {
     background-color: var(--color-2);
+}
+
+.color-visited {
+    background-color: var(--color-3)
 }
   
 /* Grid Cell */

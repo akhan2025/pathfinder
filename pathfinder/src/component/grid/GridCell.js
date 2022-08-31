@@ -1,4 +1,5 @@
 import React from "react";
+import "./GridCell.css";
 
 // Represents a single square in the grid
 
