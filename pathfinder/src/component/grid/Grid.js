@@ -1,25 +1,20 @@
 import "./Grid.css";
+import GridCell from "./GridCell";
+import React from "react";
 
-const CELL_SIZE = 20;
-const WIDTH = 1000;
-const HEIGHT = 800;
+const WIDTH = 20;
+const HEIGHT = 20;
 
-function GridBoard(){
-    return (
-      <div>
-        {" "}
-        <div
-          className="Grid"
-          style={{
-            width: WIDTH,
-            height: HEIGHT,
-            backgroundSize: `${CELL_SIZE}px ${CELL_SIZE}px`,
-          }}
-        >
-          {" "}
-        </div>{" "}
-      </div>
-    );
+function GridBoard() {
+  const grid = [];
+  for (let row = 0; row < WIDTH; row++) {
+    grid.push([]);
+    for (let col = 0; col < HEIGHT; col++) {
+      grid[row].push(<GridCell key={`${col}${row}`} color="1" />);
+    }
   }
+
+  return <div className="Grid-Board">{grid}</div>;
+}
 
 export default GridBoard;
