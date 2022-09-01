@@ -6,24 +6,25 @@ import MainSideBar from "./StartCard";
 import Nav from "./Navbar";
 import Queue from "./Queue";
 
-const GRID_WIDTH = 10;
-const GRID_HEIGHT = 10;
+const GRID_HEIGHT = 20;
+const GRID_WIDTH = 30;
 
 let S_ROW = Math.floor(GRID_HEIGHT / 4);
 let S_COL = Math.floor(GRID_WIDTH / 4);
 
 function setUpInitialGrid() {
   const initialGrid = [];
-  for (let row = 0; row < GRID_WIDTH; row++) {
+  for (let row = 0; row < GRID_HEIGHT; row++) {
     initialGrid.push([]);
-    for (let col = 0; col < GRID_HEIGHT; col++) {
+    for (let col = 0; col < GRID_WIDTH; col++) {
       initialGrid[row].push({
-        type: "visited",
+        type: "unvisited",
         row: row,
         col: col
       });
     }
   }
+  console.log('starting cell: ', S_ROW, S_COL)
   initialGrid[S_ROW][S_COL].type = "start";
 
   let T_ROW = Math.floor(GRID_HEIGHT - 4);
@@ -60,7 +61,7 @@ function visitAll(grid) {
     if (col - 1 >= 0 && grid[row][col - 1].type === 'unvisited') {
       queue.enqueue(grid[row][col - 1])
     }
-    if (col + 1 < grid.length && grid[row][col + 1].type === 'unvisited') {
+    if (col + 1 < grid[0].length && grid[row][col + 1].type === 'unvisited') {
       queue.enqueue(grid[row][col + 1])
     }
     passes++;
@@ -91,7 +92,7 @@ function App() {
 
   return (
     <Grid
-      rows={["xxsmall", "small", "small", "small"]}
+      rows={["xxsmall", "small", "small", "auto"]}
       columns={["medium", "auto"]}
       areas={[
         { name: "nav", start: [0, 0], end: [1, 0] },
@@ -103,18 +104,13 @@ function App() {
       <Box gridArea="nav" justify="center">
         <Nav />
       </Box>
-      <Box border={{ color: "white", style: "hidden" }} gridArea="card">
+      <Box gridArea="card">
         <MainSideBar
           onResetBoardClick={onResetBoardClick}
           onVisualizeClick={onVisualizeClick}
         />
       </Box>
-      <Box
-        border={{ color: "border", style: "dashed" }}
-        gridArea="graph"
-        justify="center"
-        pad="small"
-      >
+      <Box gridArea="graph">
         <InitializeGridBoard grid={grid} />
       </Box>
     </Grid>

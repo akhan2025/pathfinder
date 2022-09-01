@@ -9,8 +9,8 @@
 
     /* Numbers define values that will be used throughout the CSS.
     --tile-size: 20px for example will set size of the grid squares. */
-    --cols: 10;
-    --rows: 10;
+    --rows: 20;
+    --cols: 30;
     --tile-size: 30px;
     --border-width: 1px;
 
