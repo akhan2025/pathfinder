@@ -6,6 +6,7 @@ import MainSideBar from "./StartCard";
 import Nav from "./Navbar";
 import Queue from "./Queue";
 
+
 const GRID_WIDTH = 10;
 const GRID_HEIGHT = 10;
 
@@ -85,6 +86,14 @@ function App() {
     );
   };
 
+
+  const [value, setValue] = React.useState('Choose Algorithm');
+  
+  function mapTest(algo){
+    console.log(algo)
+    setValue(algo)
+  }
+
   const onVisualizeClick = () => {
     setGrid((prevGrid) => visitAll(prevGrid))
   }
@@ -107,6 +116,8 @@ function App() {
         <MainSideBar
           onResetBoardClick={onResetBoardClick}
           onVisualizeClick={onVisualizeClick}
+          setValue={mapTest}
+          value={value}
         />
       </Box>
       <Box
