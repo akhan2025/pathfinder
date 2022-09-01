@@ -6,7 +6,6 @@ import MainSideBar from "./StartCard";
 import Nav from "./Navbar";
 import Queue from "./Queue";
 
-
 const GRID_WIDTH = 10;
 const GRID_HEIGHT = 10;
 
@@ -73,6 +72,7 @@ function visitAll(grid) {
 
 function App() {
   const [grid, setGrid] = useState(setUpInitialGrid());
+  const [selectedAlgo, setSelectedAlgo] = React.useState('Choose Algorithm');
 
   const onResetBoardClick = () => {
     setGrid((prevGrid) =>
@@ -86,16 +86,13 @@ function App() {
     );
   };
 
-
-  const [value, setValue] = React.useState('Choose Algorithm');
-  
-  function mapTest(algo){
-    console.log(algo)
-    setValue(algo)
-  }
-
   const onVisualizeClick = () => {
     setGrid((prevGrid) => visitAll(prevGrid))
+  }
+
+  function changeAlgorithm(algo) {
+    console.log(algo)
+    setSelectedAlgo(algo)
   }
 
   return (
@@ -116,8 +113,8 @@ function App() {
         <MainSideBar
           onResetBoardClick={onResetBoardClick}
           onVisualizeClick={onVisualizeClick}
-          setValue={mapTest}
-          value={value}
+          changeAlgorithm={changeAlgorithm}
+          selectedAlgo={selectedAlgo}
         />
       </Box>
       <Box
