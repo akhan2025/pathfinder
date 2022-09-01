@@ -4,6 +4,7 @@ import { Button, Box, Nav, Select, Text, Grid } from 'grommet';
 import { Down, Flag, Home } from 'grommet-icons'
 import { Sidebar } from 'grommet/components/Sidebar';
 
+
 const SidebarHeader = () => (
     <Grid>
         <Box align="center" gap="small" direction="row" margin={{ bottom: 'medium' }}>
@@ -22,7 +23,8 @@ const SidebarFooter = (props) => (
         <Button
             label='Visualize'
             color={'status-ok'}
-            hoverIndicator="status-ok" />
+            hoverIndicator="status-ok"
+            onClick={() => props.onVisualizeClick()} />
         <Button
             label='Reset Board'
             color={'status-error'}
@@ -31,22 +33,21 @@ const SidebarFooter = (props) => (
     </Nav>
 );
 
-function SelectAlgo() {
-    const [value, setValue] = React.useState('Choose Algorithm');
+function SelectAlgo(props) {
     return (
         <><Text>Choose Algorithm:</Text><Select
             icon=<Down color='status-ok' />
             options={['Dijkstras', 'BFS', 'DFS', 'A*']}
-            value={value}
-            onChange={({ option }) => setValue(option)} /></>
+            value={props.selectedAlgo}
+            onChange={({ option }) => props.changeAlgorithm(option)} /></>
     );
 }
 
-function MainNavigation() {
+function MainNavigation(props) {
     return (
         <Nav gap="small" responsive={false}>
             <Box gap='medium'>
-                <SelectAlgo />
+                <SelectAlgo changeAlgorithm={props.changeAlgorithm} selectedAlgo={props.selectedAlgo} />
 
                 <Grid
                     rows={['auto', 'auto']}
@@ -65,13 +66,13 @@ function MainNavigation() {
                         <Home size="medium" />
                     </Box>
                     <Box
-                    direction='row'
+                        direction='row'
                         gridArea="endNode"
                         pad="small"
                         gap='small'
                         alignContent='start'>
                         <Text>End Node: </Text>
-                        <Flag size='medium'/>
+                        <Flag size='medium' />
                     </Box>
                 </Grid>
             </Box >
@@ -86,11 +87,12 @@ function mainSideBar(props) {
                 responsive={false}
                 background="light-1"
                 header={<SidebarHeader />}
-                footer={<SidebarFooter onResetBoardClick={props.onResetBoardClick}/>}
+                footer={<SidebarFooter onResetBoardClick={props.onResetBoardClick} onVisualizeClick={props.onVisualizeClick} />}
                 pad={{ left: 'medium', right: 'large', vertical: 'medium' }}
                 round={[{ size: "small", corner: "top" }, { size: "small", corner: "bottom" }]}
             >
-                <MainNavigation />
+                <MainNavigation changeAlgorithm={props.changeAlgorithm} selectedAlgo={props.selectedAlgo} />
+
             </Sidebar>
         </Box>
     );
