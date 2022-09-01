@@ -63,11 +63,11 @@ function visitAll(grid) {
     if (col + 1 < grid.length && grid[row][col + 1].type === 'unvisited') {
       queue.enqueue(grid[row][col + 1])
     }
-    passes ++;
+    passes++;
   }
 
   console.log(passes)
-  return grid
+  return [...grid]
 }
 
 function App() {
