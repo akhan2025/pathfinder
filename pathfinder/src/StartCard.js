@@ -3,7 +3,6 @@ import React from 'react';
 import { Button, Box, Nav, Select, Text, Grid } from 'grommet';
 import { Down, Flag, Home } from 'grommet-icons'
 import { Sidebar } from 'grommet/components/Sidebar';
-import clearBoard from './component/grid/Grid'
 
 const SidebarHeader = () => (
     <Grid>
@@ -18,7 +17,7 @@ const SidebarHeader = () => (
     </Grid>
 );
 
-const SidebarFooter = () => (
+const SidebarFooter = (props) => (
     <Nav gap='small' responsive>
         <Button
             label='Visualize'
@@ -28,7 +27,7 @@ const SidebarFooter = () => (
             label='Reset Board'
             color={'status-error'}
             hoverIndicator="status-error"
-            onClick={clearBoard} />
+            onClick={() => props.onResetBoardClick()} />
     </Nav>
 );
 
@@ -80,14 +79,14 @@ function MainNavigation() {
     );
 }
 
-function mainSideBar() {
+function mainSideBar(props) {
     return (
         <Box direction="row" height={{ min: '100%' }}>
             <Sidebar
                 responsive={false}
                 background="light-1"
                 header={<SidebarHeader />}
-                footer={<SidebarFooter />}
+                footer={<SidebarFooter onResetBoardClick={props.onResetBoardClick}/>}
                 pad={{ left: 'medium', right: 'large', vertical: 'medium' }}
                 round={[{ size: "small", corner: "top" }, { size: "small", corner: "bottom" }]}
             >
