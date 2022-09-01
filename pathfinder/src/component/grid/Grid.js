@@ -1,25 +1,16 @@
 import "./Grid.css";
+import GridCell from "./GridCell";
+import React from "react";
 
-const CELL_SIZE = 20;
-const WIDTH = 1000;
-const HEIGHT = 800;
 
-function GridBoard(){
-    return (
-      <div>
-        {" "}
-        <div
-          className="Grid"
-          style={{
-            width: WIDTH,
-            height: HEIGHT,
-            backgroundSize: `${CELL_SIZE}px ${CELL_SIZE}px`,
-          }}
-        >
-          {" "}
-        </div>{" "}
-      </div>
-    );
-  }
+function InitializeGridBoard(props) {
+  let gridComponent = props.grid.map((row, rowIndex) =>
+    row.map((gridCell, colIndex) => (
+      <GridCell key={`${rowIndex} ${colIndex}`} type={gridCell.type} />
+    ))
+  );
 
-export default GridBoard;
+  return <div className="Grid-Board">{gridComponent}</div>;
+}
+
+export default InitializeGridBoard;

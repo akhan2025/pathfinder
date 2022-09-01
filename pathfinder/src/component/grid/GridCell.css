@@ -1,0 +1,69 @@
+:root {
+    --bg-color: rgba(150, 150, 150, 1);
+
+    /* Square Colors:  background colors for the squares.*/
+    --color-start: rgb(40, 231, 40);
+    --color-target: rgb(232, 26, 26);
+    --color-unvisited: rgb(255, 255, 255);
+    --color-visited: #7070e3;
+
+    /* Numbers define values that will be used throughout the CSS.
+    --tile-size: 20px for example will set size of the grid squares. */
+    --cols: 10;
+    --rows: 10;
+    --tile-size: 30px;
+    --border-width: 1px;
+
+}
+
+/* Colors */
+.cell-start {
+    background-color: var(--color-start);
+}
+
+.cell-target {
+    background-color: var(--color-target);
+}
+
+.cell-unvisited {
+    background-color: var(--color-unvisited);
+}
+
+.cell-visited {
+    background-color: var(--color-visited);
+    animation-name: visited;
+    animation-duration: .5s;
+    animation-timing-function: ease-in-out;
+    animation-delay: 0;
+    animation-direction: alternate;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+}
+
+/* Grid Cell */
+.grid-cell {
+    border-style: solid;
+    width: var(--tile-size);
+    height: var(--tile-size);
+    border-width: var(--border-width);
+}
+
+@keyframes visited {
+    0% {
+      transform: scale(0.1);
+      background-color: white;
+    }
+  
+    50% {
+      background-color: rgba(155, 43, 43, 0.75);
+    }
+  
+    75% {
+      background-color: rgba(122, 26, 109, 0.75);
+    }
+  
+    100% {
+      background-color: var(--color-visited);
+    }
+  }

@@ -17,16 +17,17 @@ const SidebarHeader = () => (
     </Grid>
 );
 
-const SidebarFooter = () => (
-    <Nav gap='small' responsive='true'>
+const SidebarFooter = (props) => (
+    <Nav gap='small' responsive>
         <Button
             label='Visualize'
             color={'status-ok'}
             hoverIndicator="status-ok" />
         <Button
-            label='Clear Board'
+            label='Reset Board'
             color={'status-error'}
-            hoverIndicator="status-error" />
+            hoverIndicator="status-error"
+            onClick={() => props.onResetBoardClick()} />
     </Nav>
 );
 
@@ -78,14 +79,14 @@ function MainNavigation() {
     );
 }
 
-function mainSideBar() {
+function mainSideBar(props) {
     return (
         <Box direction="row" height={{ min: '100%' }}>
             <Sidebar
                 responsive={false}
                 background="light-1"
                 header={<SidebarHeader />}
-                footer={<SidebarFooter />}
+                footer={<SidebarFooter onResetBoardClick={props.onResetBoardClick}/>}
                 pad={{ left: 'medium', right: 'large', vertical: 'medium' }}
                 round={[{ size: "small", corner: "top" }, { size: "small", corner: "bottom" }]}
             >
