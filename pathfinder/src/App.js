@@ -46,22 +46,26 @@ function visitAll(grid) {
     if (cell.type === 'unvisited') {
       cell.type = 'visited'
     }
+    else if(cell.type === 'target'){
+      console.log('target found!')
+      break;
+    }
     else if (cell.type === 'visited') {
       continue
     }
     let row = cell.row
     let col = cell.col
 
-    if (row - 1 >= 0 && grid[row - 1][col].type === 'unvisited') {
+    if (row - 1 >= 0 && grid[row - 1][col].type !== 'visited') {
       queue.enqueue(grid[row - 1][col])
     }
-    if (row + 1 < grid.length && grid[row + 1][col].type === 'unvisited') {
+    if (row + 1 < grid.length && grid[row + 1][col].type !== 'visited') {
       queue.enqueue(grid[row + 1][col])
     }
-    if (col - 1 >= 0 && grid[row][col - 1].type === 'unvisited') {
+    if (col - 1 >= 0 && grid[row][col - 1].type !== 'visited') {
       queue.enqueue(grid[row][col - 1])
     }
-    if (col + 1 < grid[0].length && grid[row][col + 1].type === 'unvisited') {
+    if (col + 1 < grid[0].length && grid[row][col + 1].type !== 'visited') {
       queue.enqueue(grid[row][col + 1])
     }
     passes++;
