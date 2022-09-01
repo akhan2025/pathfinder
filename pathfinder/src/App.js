@@ -4,9 +4,13 @@ import InitializeGridBoard from "./component/grid/Grid";
 import { Box, Grid } from "grommet";
 import MainSideBar from "./StartCard";
 import Nav from "./Navbar";
+import Queue from "./Queue";
 
 const GRID_WIDTH = 10;
 const GRID_HEIGHT = 10;
+
+let S_ROW = Math.floor(GRID_HEIGHT / 4);
+let S_COL = Math.floor(GRID_WIDTH / 4);
 
 function setUpInitialGrid() {
   const initialGrid = [];
@@ -15,11 +19,11 @@ function setUpInitialGrid() {
     for (let col = 0; col < GRID_HEIGHT; col++) {
       initialGrid[row].push({
         type: "visited",
+        row: row,
+        col: col
       });
     }
   }
-  let S_ROW = Math.floor(GRID_HEIGHT / 4);
-  let S_COL = Math.floor(GRID_WIDTH / 4);
   initialGrid[S_ROW][S_COL].type = "start";
 
   let T_ROW = Math.floor(GRID_HEIGHT - 4);
@@ -29,9 +33,46 @@ function setUpInitialGrid() {
   return initialGrid;
 }
 
+function visitAll(grid) {
+
+  const queue = new Queue();
+  console.log('created queue');
+  queue.enqueue(grid[S_ROW][S_COL]);
+  console.log('enqueued start');
+  let passes = 0;
+  while (!queue.isEmpty) {
+    let cell = queue.dequeue()
+    if (cell.type === 'unvisited') {
+      cell.type = 'visited'
+    }
+    else if (cell.type === 'visited') {
+      continue
+    }
+    let row = cell.row
+    let col = cell.col
+
+    if (row - 1 >= 0 && grid[row - 1][col].type === 'unvisited') {
+      queue.enqueue(grid[row - 1][col])
+    }
+    if (row + 1 < grid.length && grid[row + 1][col].type === 'unvisited') {
+      queue.enqueue(grid[row + 1][col])
+    }
+    if (col - 1 >= 0 && grid[row][col - 1].type === 'unvisited') {
+      queue.enqueue(grid[row][col - 1])
+    }
+    if (col + 1 < grid.length && grid[row][col + 1].type === 'unvisited') {
+      queue.enqueue(grid[row][col + 1])
+    }
+    passes ++;
+  }
+
+  console.log(passes)
+  return grid
+}
+
 function App() {
   const [grid, setGrid] = useState(setUpInitialGrid());
-  
+
   const onResetBoardClick = () => {
     setGrid((prevGrid) =>
       prevGrid.map((row) =>
@@ -43,6 +84,10 @@ function App() {
       )
     );
   };
+
+  const onVisualizeClick = () => {
+    setGrid((prevGrid) => visitAll(prevGrid))
+  }
 
   return (
     <Grid
@@ -61,6 +106,7 @@ function App() {
       <Box border={{ color: "white", style: "hidden" }} gridArea="card">
         <MainSideBar
           onResetBoardClick={onResetBoardClick}
+          onVisualizeClick={onVisualizeClick}
         />
       </Box>
       <Box

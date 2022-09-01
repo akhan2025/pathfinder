@@ -22,7 +22,8 @@ const SidebarFooter = (props) => (
         <Button
             label='Visualize'
             color={'status-ok'}
-            hoverIndicator="status-ok" />
+            hoverIndicator="status-ok"
+            onClick={() => props.onVisualizeClick()} />
         <Button
             label='Reset Board'
             color={'status-error'}
@@ -86,7 +87,7 @@ function mainSideBar(props) {
                 responsive={false}
                 background="light-1"
                 header={<SidebarHeader />}
-                footer={<SidebarFooter onResetBoardClick={props.onResetBoardClick}/>}
+                footer={<SidebarFooter onResetBoardClick={props.onResetBoardClick} onVisualizeClick={props.onVisualizeClick}/>}
                 pad={{ left: 'medium', right: 'large', vertical: 'medium' }}
                 round={[{ size: "small", corner: "top" }, { size: "small", corner: "bottom" }]}
             >

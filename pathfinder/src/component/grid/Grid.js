@@ -6,7 +6,10 @@ import React from "react";
 function InitializeGridBoard(props) {
   let gridComponent = props.grid.map((row, rowIndex) =>
     row.map((gridCell, colIndex) => (
-      <GridCell key={`${rowIndex} ${colIndex}`} type={gridCell.type} />
+      <GridCell key={`${rowIndex} ${colIndex}`} 
+      type={gridCell.type} 
+      row={rowIndex}
+      col={colIndex}/>
     ))
   );
 
