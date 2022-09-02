@@ -6,6 +6,7 @@
     --color-target: rgb(232, 26, 26);
     --color-unvisited: rgb(255, 255, 255);
     --color-visited: #7070e3;
+    --color-shortest: yellow;
 
     /* Numbers define values that will be used throughout the CSS.
     --tile-size: 20px for example will set size of the grid squares. */
@@ -27,6 +28,10 @@
 
 .cell-unvisited {
     background-color: var(--color-unvisited);
+}
+
+.cell-shortest {
+    background-color: var(--color-shortest);
 }
 
 .cell-visited {
