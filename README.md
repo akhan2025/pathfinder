@@ -30,10 +30,10 @@ Our goal in this project is to create a visualizer for pathfinding algorithms in
 - 1. Anime.JS
 - 2. pts.JS
 - 3. mo.JS
-- [ ] Develop a working visual version of a graph
-  - [ ] Create Grid made out of cells
-  - [ ] Have each cell have its own state that can change
-  - [ ] Start and Target Nodes
+- [X] Develop a working visual version of a graph
+  - [X] Create Grid made out of cells
+  - [X] Have each cell have its own state that can change
+  - [X] Start and Target Nodes
 - [ ] Develop pathfinding algos for graph
   - Dijkstra's Algorithm
   - BFS
