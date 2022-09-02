@@ -1,19 +1,29 @@
 import Queue from "./Queue";
 
+/**
+ * Runs Breadth-First Search on the grid and stores all cells visited until it finds the target
+ * 
+ * @param {[][]} grid 
+ * @param {number} S_ROW 
+ * @param {number} S_COL 
+ * @returns {[]} visitedcells
+ */
 function BFS(grid, S_ROW, S_COL) {
-  let copy_grid = grid.map((row) =>
+
+  let copy_grid = grid.map((row) =>    		// Create a copy of grid so we don't change the component directly                              
     row.map((gridCell) => {
       return { ...gridCell };
     })
   );
-  const queue = new Queue();
+
+  const queue = new Queue();              //Initialize queue and push starting cell onto it
   console.log("created queue");
   queue.enqueue(copy_grid[S_ROW][S_COL]);
   console.log("enqueued start");
-  let passes = 0;
+
   let visitedcells = [];
 
-  while (!queue.isEmpty) {
+  while (!queue.isEmpty) {								//Search adjacent neighbors until target is found
     let cell = queue.dequeue();
 
     if (cell.type === "unvisited") {
@@ -47,10 +57,8 @@ function BFS(grid, S_ROW, S_COL) {
     ) {
       queue.enqueue(copy_grid[row][col + 1]);
     }
-    passes++;
   }
 
-  console.log(passes);
   return visitedcells;
 }
 

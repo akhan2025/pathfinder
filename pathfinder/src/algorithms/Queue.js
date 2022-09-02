@@ -1,43 +1,53 @@
+/**
+ * Queue object to perform fifo type operations
+ */
 class Queue {
-    constructor() {
-      this.elements = {};
-      this.head = 0;
-      this.tail = 0;
-    }
-    enqueue(element) {
-      this.elements[this.tail] = element;
-      this.tail++;
-    }
-    dequeue() {
-      const item = this.elements[this.head];
-      delete this.elements[this.head];
-      this.head++;
-      return item;
-    }
-    peek() {
-      return this.elements[this.head];
-    }
-    get length() {
-      return this.tail - this.head;
-    }
-    get isEmpty() {
-      return this.length === 0;
-    }
+
+  constructor() {
+    this.elements = {};
+    this.head = 0;
+    this.tail = 0;
   }
-  
-  let q = new Queue();
-  for (let i = 1; i <= 7; i++) {
-    q.enqueue(i);
+
+  /**
+   * Adds the element to the end of the queue
+   * 
+   * @param {any} element 
+   */
+  enqueue(element) {
+    this.elements[this.tail] = element;
+    this.tail++;
   }
-  // get the current item at the front of the queue
-  console.log(q.peek()); // 1
-  
-  // get the current length of queue
-  console.log(q.length); // 7
-  
-  // dequeue all elements
-  while (!q.isEmpty) {
-    console.log(q.dequeue());
+  /**
+   * 
+   * @returns Element at the front of the queue
+   */
+  dequeue() {
+    const item = this.elements[this.head];
+    delete this.elements[this.head];
+    this.head++;
+    return item;
   }
+
+  /**
+   * 
+   * @returns Element at front without removing from queue
+   */
+  peek() {
+    return this.elements[this.head];
+  }
+  /**
+   * Length of the queue
+   */
+  get length() {
+    return this.tail - this.head;
+  }
+  /**
+   * Checks if queue is empty
+   */
+  get isEmpty() {
+    return this.length === 0;
+  }
+}
 
   export default Queue

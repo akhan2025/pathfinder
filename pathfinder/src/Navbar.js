@@ -10,7 +10,6 @@ function Navigation() {
           weight="bold"
           color="Light"
           size='large'
-          //add graph here
         >
           DBG Algorithmic Pathfinding
         </Text>
