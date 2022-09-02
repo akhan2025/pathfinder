@@ -5,6 +5,7 @@ import { Box, Grid } from "grommet";
 import MainSideBar from "./StartCard";
 import Nav from "./Navbar";
 import BFS from "./algorithms/BFS";
+import DFS from "./algorithms/DFS";
 
 const GRID_HEIGHT = 20;
 const GRID_WIDTH = 30;
@@ -93,7 +94,7 @@ function App() {
         setVisitedGridCellsToUpdateSequentially(BFS(grid, S_ROW, S_COL));
         break;
       case "DFS":
-        alert(in_progress);
+        setVisitedGridCellsToUpdateSequentially(DFS(grid, S_ROW, S_COL));
         break;
       case "Dijkstras":
         alert(in_progress);
