@@ -20,20 +20,21 @@ Our goal in this project is to create a visualizer for pathfinding algorithms in
 - 3. Vue.JS
 - 4. React.JS ✅
 - [X] Create basic website to visualize testing
-- [ ] Choosing a style for website and built it out 
+- [X] Choosing a style for website and built it out 
 - 1. Bootstrap
 - 2. Bulma
 - 3. Material UI
 - 4. Grommet
 - 5. Chakra UI
-- [ ] Which animation Framework to use, if necessart
-- 1. Anime.JS
-- 2. pts.JS
-- 3. mo.JS
 - [X] Develop a working visual version of a graph
   - [X] Create Grid made out of cells
   - [X] Have each cell have its own state that can change
   - [X] Start and Target Nodes
+  - [ ] Connect dropdown to actual algos
+  - [ ] Display shortest path when found
+- [ ] About us page
+  - [ ] Build router to connect pages
+  - [ ] Have humza build all of the about us page
 - [ ] Develop pathfinding algos for graph
   - Dijkstra's Algorithm
   - BFS
