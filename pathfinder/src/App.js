@@ -5,6 +5,7 @@ import { Box, Grid } from "grommet";
 import MainSideBar from "./StartCard";
 import Nav from "./Navbar";
 import BFS from "./algorithms/BFS";
+import DFS from "./algorithms/DFS";
 import useUpdateGridCellsSequentially from "./hooks/useUpdateGridCellsSequentially";
 
 // Set size of grid
@@ -44,7 +45,7 @@ function setUpInitialGrid() {
 function App() {
   const [grid, setGrid] = useState(setUpInitialGrid());                           // Initializes the grid as a state and provides a setter function using the statehook
   const [selectedAlgo, setSelectedAlgo] = React.useState("Choose Algorithm");     // Initializes the selectAlgo as a state and provides a setter function using the statehook
-  const setVisitedGridCellsToUpdateSequentially =                                 
+  const [areVisitedGridCellsUpdating, setVisitedGridCellsToUpdateSequentially] =                                 
     useUpdateGridCellsSequentially(setGrid, (cell) => (cell.type = "visited"));
 
   const onResetBoardClick = () => {                                               // Provides function for Resetting the Board by mapping all visited cells as unvisited
@@ -67,7 +68,7 @@ function App() {
         setVisitedGridCellsToUpdateSequentially(BFS(grid, S_ROW, S_COL));
         break;
       case "DFS":
-        alert(in_progress);
+        setVisitedGridCellsToUpdateSequentially(DFS(grid, S_ROW, S_COL));
         break;
       case "Dijkstras":
         alert(in_progress);
@@ -103,7 +104,9 @@ function App() {
       <Box gridArea="card">
         <MainSideBar
           onResetBoardClick={onResetBoardClick}
+          resetBoardButtonDisabled={areVisitedGridCellsUpdating}
           onVisualizeClick={onVisualizeClick}
+          visualizeButtonDisabled={areVisitedGridCellsUpdating}
           changeAlgorithm={changeAlgorithm}
           selectedAlgo={selectedAlgo}
         />

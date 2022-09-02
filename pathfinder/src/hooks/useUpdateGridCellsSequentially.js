@@ -33,11 +33,16 @@ function useUpdateGridCellsSequentially(setGridState, updateCell) {
   }, [setGridState, cellsIndex]);
 
   const setGridCellsToUpdate = (cells) => {             // stores a list of cells in cellsRed and sets CellsIndex as 0 to begin useEffect()
+    if (cells === null || cells.length === 0) {
+      return;
+    }
     cellsRef.current = cells;
     setCellsIndex(0);
   };
 
-  return setGridCellsToUpdate;                         // We can call this method anywhere and now update any algorithm sequentially
+  const areGridCellsUpdating = cellsIndex !== null;
+
+  return [areGridCellsUpdating, setGridCellsToUpdate];                         // We can call this method anywhere and now update any algorithm sequentially
 }
 
 export default useUpdateGridCellsSequentially;
