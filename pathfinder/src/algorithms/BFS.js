@@ -10,23 +10,20 @@ import Queue from "./Queue";
  */
 function BFS(grid, S_ROW, S_COL) {
 
-	// Create a copy of grid so we don't change the component directly
-  let copy_grid = grid.map((row) =>
+  let copy_grid = grid.map((row) =>    		// Create a copy of grid so we don't change the component directly                              
     row.map((gridCell) => {
       return { ...gridCell };
     })
   );
 
-	//Initialize queue and push starting cell onto it
-  const queue = new Queue();
+  const queue = new Queue();              //Initialize queue and push starting cell onto it
   console.log("created queue");
   queue.enqueue(copy_grid[S_ROW][S_COL]);
   console.log("enqueued start");
 
   let visitedcells = [];
 
-	//Search adjacent neighbors until target is found
-  while (!queue.isEmpty) {
+  while (!queue.isEmpty) {								//Search adjacent neighbors until target is found
     let cell = queue.dequeue();
 
     if (cell.type === "unvisited") {

@@ -5,7 +5,7 @@ import { Down, Flag, Home } from 'grommet-icons'
 import { Sidebar } from 'grommet/components/Sidebar';
 
 /**
- * Header provides blurb on what pathfinder is
+ * Header displays the top of the card and provides blurb on what pathfinder is
  */
 const SidebarHeader = () => (
     <Grid>
@@ -21,7 +21,7 @@ const SidebarHeader = () => (
 );
 
 /**
- * Footer contains the two buttons for pathfinder
+ * Footer displays the two buttons for pathfinder
  * @param {*} props Pass in the Reset Board and Visualize functions here
  * 
  * @Visualize runs the algorithm selected and displays it on graph
@@ -60,7 +60,7 @@ function SelectAlgo(props) {
 }
 
 /**
- * Main Navigation runs the middle of the card.
+ * Main Navigation displays the middle of the card.
  * We include the dropdown as well as visuals for the different
  * types of cells in here
  * 
