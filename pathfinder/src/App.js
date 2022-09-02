@@ -42,6 +42,9 @@ function setUpInitialGrid() {
   return initialGrid;
 }
 
+/**
+ * Main function from which everything else runs
+ */
 function App() {
   const [grid, setGrid] = useState(setUpInitialGrid());                           // Initializes the grid as a state and provides a setter function using the statehook
   const [selectedAlgo, setSelectedAlgo] = React.useState("Choose Algorithm");     // Initializes the selectAlgo as a state and provides a setter function using the statehook
