@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import "./App.css";
 import InitializeGridBoard from "./component/grid/Grid";
 import { Box, Grid } from "grommet";
@@ -51,8 +51,8 @@ function App() {
   const [areVisitedGridCellsUpdating, setVisitedGridCellsToUpdateSequentially] =  // We can use the first value as a check to see if visualizing/clearing grid is legal
     useUpdateGridCellsSequentially(setGrid, (cell) => (cell.type = "visited"));   // and the second value is to update the grid
 
-  const onResetBoardClick = () => {                                               // Provides function for Resetting the Board by mapping all visited cells as unvisited
-    setGrid((prevGrid) =>                                                         // Passed as prop to MainSideBar to attach to 'Clear Board' button see line 105
+  const onResetBoardClick = useCallback(() => {                                   // Provides function for Resetting the Board by mapping all visited cells as unvisited
+    setGrid((prevGrid) =>                                                         // Passed as prop to MainSideBar to attach to 'Clear Board' button
       prevGrid.map((row) =>
         row.map((gridCell) =>
           gridCell.type === "visited"
@@ -61,10 +61,10 @@ function App() {
         )
       )
     );
-  };
+  }, []);
 
-  const onVisualizeClick = () => {                                                // Calls the algorithm selected to be visualized on the graph
-    const in_progress = "under contruction! 👷‍♂️🚧";                                // Passed as prop to MainSideBar to attach to 'Visualize' button see line 106
+  const onVisualizeClick = useCallback(() => {                                   // Calls the algorithm selected to be visualized on the graph
+    const in_progress = "under contruction! 👷‍♂️🚧";                                // Passed as prop to MainSideBar to attach to 'Visualize' button
 
     switch (selectedAlgo) {
       case "BFS":
@@ -83,12 +83,11 @@ function App() {
         alert("Please select an Algo!");
         break;
     }
-  };
+  }, [grid, selectedAlgo, setVisitedGridCellsToUpdateSequentially]);
 
-  function changeAlgorithm(algo) {                                                // Passed as prop to MainSideBar to attach to dropdown see line 107
-    console.log(algo);
+  const changeAlgorithm = useCallback((algo) => {                                // Passed as prop to MainSideBar to attach to dropdown
     setSelectedAlgo(algo);
-  }
+  }, []);
 
   return (
     <Grid
@@ -106,9 +105,9 @@ function App() {
       </Box>
       <Box gridArea="card">
         <MainSideBar
-          onResetBoardClick={onResetBoardClick}
+          onResetBoardClick={areVisitedGridCellsUpdating ? null : onResetBoardClick}
           resetBoardButtonDisabled={areVisitedGridCellsUpdating}
-          onVisualizeClick={onVisualizeClick}
+          onVisualizeClick={areVisitedGridCellsUpdating ? null : onVisualizeClick}
           visualizeButtonDisabled={areVisitedGridCellsUpdating}
           changeAlgorithm={changeAlgorithm}
           selectedAlgo={selectedAlgo}

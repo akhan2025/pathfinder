@@ -162,4 +162,4 @@ mainSideBar.args = {
   full: true,
 };
 
-export default mainSideBar;
+export default React.memo(mainSideBar);

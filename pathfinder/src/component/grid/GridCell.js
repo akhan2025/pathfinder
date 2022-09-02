@@ -12,4 +12,4 @@ function GridCell(props) {
   return <div className={classes}/>;
 }
 
-export default GridCell
+export default React.memo(GridCell);

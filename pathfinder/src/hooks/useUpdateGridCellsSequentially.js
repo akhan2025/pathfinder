@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 
 /**
  * This updates all cells on the grid in the order they are visited 
@@ -32,13 +32,13 @@ function useUpdateGridCellsSequentially(setGridState, updateCell) {
     setCellsIndex(cellsIndex + 1);
   }, [setGridState, cellsIndex]);
 
-  const setGridCellsToUpdate = (cells) => {             // stores a list of cells in cellsRed and sets CellsIndex as 0 to begin useEffect()
+  const setGridCellsToUpdate = useCallback((cells) => {             // stores a list of cells in cellsRed and sets CellsIndex as 0 to begin useEffect()
     if (cells === null || cells.length === 0) {
       return;
     }
     cellsRef.current = cells;
     setCellsIndex(0);
-  };
+  }, []);
 
   const areGridCellsUpdating = cellsIndex !== null;
 
