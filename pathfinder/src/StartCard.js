@@ -4,7 +4,9 @@ import { Button, Box, Nav, Select, Text, Grid } from 'grommet';
 import { Down, Flag, Home } from 'grommet-icons'
 import { Sidebar } from 'grommet/components/Sidebar';
 
-
+/**
+ * Header provides blurb on what pathfinder is
+ */
 const SidebarHeader = () => (
     <Grid>
         <Box align="center" gap="small" direction="row" margin={{ bottom: 'medium' }}>
@@ -18,6 +20,13 @@ const SidebarHeader = () => (
     </Grid>
 );
 
+/**
+ * Footer contains the two buttons for pathfinder
+ * @param {*} props Pass in the Reset Board and Visualize functions here
+ * 
+ * @Visualize runs the algorithm selected and displays it on graph
+ * @ResetBoard clears the grid of any visited nodes
+ */
 const SidebarFooter = (props) => (
     <Nav gap='small' responsive>
         <Button
@@ -33,6 +42,13 @@ const SidebarFooter = (props) => (
     </Nav>
 );
 
+/**
+ * SelectAlgo contains the dropdown for selecting an algorithm
+ * 
+ * @todo make the options a list passed down from app.js instead of just a list of strings
+ * 
+ * @param {*} props Pass in the SelectAlgo function here
+ */
 function SelectAlgo(props) {
     return (
         <><Text>Choose Algorithm:</Text><Select
@@ -43,6 +59,13 @@ function SelectAlgo(props) {
     );
 }
 
+/**
+ * Main Navigation runs the middle of the card.
+ * We include the dropdown as well as visuals for the different
+ * types of cells in here
+ * 
+ * @param {*} props Passes in SelectAlgo function to SelectAlgo
+ */
 function MainNavigation(props) {
     return (
         <Nav gap="small" responsive={false}>
@@ -80,6 +103,11 @@ function MainNavigation(props) {
     );
 }
 
+/**
+ * Card tile with explanation on how Pathfinder works and how to use it
+ * 
+ * @param {*} props Pass in the functions for Visualize, Clear Board, and Select Algo
+ */
 function mainSideBar(props) {
     return (
         <Box direction="row" height={{ min: '100%' }}>
@@ -88,7 +116,7 @@ function mainSideBar(props) {
                 background="light-1"
                 header={<SidebarHeader />}
                 footer={<SidebarFooter onResetBoardClick={props.onResetBoardClick} onVisualizeClick={props.onVisualizeClick} />}
-                pad={{ left: 'medium', right: 'large', vertical: 'medium' }}
+                pad={{ left: 'small', right: 'small', top: 'medium', bottom:'small' }}
                 round={[{ size: "small", corner: "top" }, { size: "small", corner: "bottom" }]}
             >
                 <MainNavigation changeAlgorithm={props.changeAlgorithm} selectedAlgo={props.selectedAlgo} />
