@@ -4,7 +4,7 @@ import InitializeGridBoard from "./component/grid/Grid";
 import { Box, Grid } from "grommet";
 import MainSideBar from "./StartCard";
 import Nav from "./Navbar";
-import Queue from "./Queue";
+import BFS from "./algorithms/BFS";
 
 const GRID_HEIGHT = 20;
 const GRID_WIDTH = 30;
@@ -34,60 +34,6 @@ function setUpInitialGrid() {
   return initialGrid;
 }
 
-function visitAll(grid) {
-  let copy_grid = grid.map((row) =>
-    row.map((gridCell) => {
-      return { ...gridCell };
-    })
-  );
-  const queue = new Queue();
-  console.log("created queue");
-  queue.enqueue(copy_grid[S_ROW][S_COL]);
-  console.log("enqueued start");
-  let passes = 0;
-  let visitedcells = [];
-
-  while (!queue.isEmpty) {
-    let cell = queue.dequeue();
-
-    if (cell.type === "unvisited") {
-      cell.type = "visited";
-      visitedcells.push(cell);
-    } else if (cell.type === "target") {
-      console.log("target found!");
-      break;
-    } else if (cell.type === "visited") {
-      continue;
-    }
-
-    let row = cell.row;
-    let col = cell.col;
-
-    if (row - 1 >= 0 && copy_grid[row - 1][col].type !== "visited") {
-      queue.enqueue(copy_grid[row - 1][col]);
-    }
-    if (
-      row + 1 < copy_grid.length &&
-      copy_grid[row + 1][col].type !== "visited"
-    ) {
-      queue.enqueue(copy_grid[row + 1][col]);
-    }
-    if (col - 1 >= 0 && copy_grid[row][col - 1].type !== "visited") {
-      queue.enqueue(copy_grid[row][col - 1]);
-    }
-    if (
-      col + 1 < copy_grid[0].length &&
-      copy_grid[row][col + 1].type !== "visited"
-    ) {
-      queue.enqueue(copy_grid[row][col + 1]);
-    }
-    passes++;
-  }
-
-  console.log(passes);
-  return visitedcells;
-}
-
 function useUpdateGridCellsSequentially(setGridState, updateCell) {
   const [cellsIndex, setCellsIndex] = useState(null);
   const cellsRef = useRef([]);
@@ -106,8 +52,8 @@ function useUpdateGridCellsSequentially(setGridState, updateCell) {
     setGridState((prevGrid) => {
       let row = cells[cellsIndex].row;
       let col = cells[cellsIndex].col;
-      let cell = prevGrid[row][col]
-      updateCellRef.current(cell)
+      let cell = prevGrid[row][col];
+      updateCellRef.current(cell);
       return [...prevGrid];
     });
     setCellsIndex(cellsIndex + 1);
@@ -124,7 +70,8 @@ function useUpdateGridCellsSequentially(setGridState, updateCell) {
 function App() {
   const [grid, setGrid] = useState(setUpInitialGrid());
   const [selectedAlgo, setSelectedAlgo] = React.useState("Choose Algorithm");
-  const setVisitedGridCellsToUpdateSequentially = useUpdateGridCellsSequentially(setGrid, (cell) => cell.type = 'visited');
+  const setVisitedGridCellsToUpdateSequentially =
+    useUpdateGridCellsSequentially(setGrid, (cell) => (cell.type = "visited"));
 
   const onResetBoardClick = () => {
     setGrid((prevGrid) =>
@@ -139,7 +86,26 @@ function App() {
   };
 
   const onVisualizeClick = () => {
-    setVisitedGridCellsToUpdateSequentially(visitAll(grid));
+    const in_progress = "under contruction! 👷‍♂️🚧"
+
+    switch (selectedAlgo) {
+      case "BFS":
+        setVisitedGridCellsToUpdateSequentially(BFS(grid, S_ROW, S_COL));
+        break;
+      case "DFS":
+        alert(in_progress);
+        break;
+      case "Dijkstras":
+        alert(in_progress);
+        break;
+      case "A*":
+        alert(in_progress);
+        break;
+      default:
+        alert("Please select an Algo!") // change this to a Grommet component
+        break;
+    }
+    
   };
 
   function changeAlgorithm(algo) {
