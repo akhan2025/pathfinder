@@ -30,21 +30,25 @@ function BFS(grid, S_ROW, S_COL) {
     let col = cell.col;
 
     if (row - 1 >= 0 && copy_grid[row - 1][col].type !== "visited") {
+      copy_grid[row - 1][col].previous = copy_grid[row][col];
       queue.enqueue(copy_grid[row - 1][col]);
     }
     if (
       row + 1 < copy_grid.length &&
       copy_grid[row + 1][col].type !== "visited"
     ) {
+      copy_grid[row + 1][col].previous = copy_grid[row][col];
       queue.enqueue(copy_grid[row + 1][col]);
     }
     if (col - 1 >= 0 && copy_grid[row][col - 1].type !== "visited") {
+      copy_grid[row][col - 1].previous = copy_grid[row][col];
       queue.enqueue(copy_grid[row][col - 1]);
     }
     if (
       col + 1 < copy_grid[0].length &&
       copy_grid[row][col + 1].type !== "visited"
     ) {
+      copy_grid[row][col + 1].previous = copy_grid[row][col];
       queue.enqueue(copy_grid[row][col + 1]);
     }
     passes++;

@@ -8,12 +8,14 @@ import BFS from "./algorithms/BFS";
 import DFS from "./algorithms/DFS";
 import useUpdateGridCellsSequentially from "./hooks/useUpdateGridCellsSequentially";
 
-
 const GRID_HEIGHT = 20;
 const GRID_WIDTH = 30;
 
 let S_ROW = Math.floor(GRID_HEIGHT / 4);
 let S_COL = Math.floor(GRID_WIDTH / 4);
+
+let T_ROW = Math.floor(GRID_HEIGHT - 4);
+let T_COL = Math.floor(GRID_WIDTH - 4);
 
 function setUpInitialGrid() {
   const initialGrid = [];
@@ -24,14 +26,12 @@ function setUpInitialGrid() {
         type: "unvisited",
         row: row,
         col: col,
+        previous: null,
       });
     }
   }
   console.log("starting cell: ", S_ROW, S_COL);
   initialGrid[S_ROW][S_COL].type = "start";
-
-  let T_ROW = Math.floor(GRID_HEIGHT - 4);
-  let T_COL = Math.floor(GRID_WIDTH - 4);
   initialGrid[T_ROW][T_COL].type = "target";
 
   return initialGrid;
@@ -48,7 +48,7 @@ function App() {
       prevGrid.map((row) =>
         row.map((gridCell) =>
           gridCell.type === "visited"
-            ? { ...gridCell, type: "unvisited" }
+            ? { ...gridCell, type: "unvisited", previous: null }
             : gridCell
         )
       )
@@ -75,11 +75,23 @@ function App() {
         alert("Please select an Algo!");
         break;
     }
+    const shortestPathOrder = getShortestPath(grid[T_ROW][T_COL]);
   };
 
   function changeAlgorithm(algo) {
     console.log(algo);
     setSelectedAlgo(algo);
+  }
+
+  function getShortestPath(finishCell) {
+    const shortestPath = [];
+    let currentCell = finishCell;
+    while (currentCell !== null) {
+      console.log("Finish Cell");
+      shortestPath.unshift(currentCell);
+      currentCell = currentCell.previous;
+    }
+    return shortestPath;
   }
 
   return (
