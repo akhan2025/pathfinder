@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./App.css";
 import InitializeGridBoard from "./component/grid/Grid";
 import { Box, Grid } from "grommet";
@@ -20,11 +20,11 @@ function setUpInitialGrid() {
       initialGrid[row].push({
         type: "unvisited",
         row: row,
-        col: col
+        col: col,
       });
     }
   }
-  console.log('starting cell: ', S_ROW, S_COL)
+  console.log("starting cell: ", S_ROW, S_COL);
   initialGrid[S_ROW][S_COL].type = "start";
 
   let T_ROW = Math.floor(GRID_HEIGHT - 4);
@@ -35,88 +35,96 @@ function setUpInitialGrid() {
 }
 
 function visitAll(grid) {
-  let copy_grid =
-    grid.map((row) =>
-      row.map((gridCell) => { return { ...gridCell } }
-      )
-    );
+  let copy_grid = grid.map((row) =>
+    row.map((gridCell) => {
+      return { ...gridCell };
+    })
+  );
   const queue = new Queue();
-  console.log('created queue');
+  console.log("created queue");
   queue.enqueue(copy_grid[S_ROW][S_COL]);
-  console.log('enqueued start');
+  console.log("enqueued start");
   let passes = 0;
-  let visitedcells = []
+  let visitedcells = [];
 
   while (!queue.isEmpty) {
-    let cell = queue.dequeue()
+    let cell = queue.dequeue();
 
-    if (cell.type === 'unvisited') {
-      cell.type = 'visited'
-      visitedcells.push(cell)
-    }
-    else if (cell.type === 'target') {
-      console.log('target found!')
+    if (cell.type === "unvisited") {
+      cell.type = "visited";
+      visitedcells.push(cell);
+    } else if (cell.type === "target") {
+      console.log("target found!");
       break;
-    }
-    else if (cell.type === 'visited') {
-      continue
+    } else if (cell.type === "visited") {
+      continue;
     }
 
-    let row = cell.row
-    let col = cell.col
+    let row = cell.row;
+    let col = cell.col;
 
-    if (row - 1 >= 0 && copy_grid[row - 1][col].type !== 'visited') {
-      queue.enqueue(copy_grid[row - 1][col])
+    if (row - 1 >= 0 && copy_grid[row - 1][col].type !== "visited") {
+      queue.enqueue(copy_grid[row - 1][col]);
     }
-    if (row + 1 < copy_grid.length && copy_grid[row + 1][col].type !== 'visited') {
-      queue.enqueue(copy_grid[row + 1][col])
+    if (
+      row + 1 < copy_grid.length &&
+      copy_grid[row + 1][col].type !== "visited"
+    ) {
+      queue.enqueue(copy_grid[row + 1][col]);
     }
-    if (col - 1 >= 0 && copy_grid[row][col - 1].type !== 'visited') {
-      queue.enqueue(copy_grid[row][col - 1])
+    if (col - 1 >= 0 && copy_grid[row][col - 1].type !== "visited") {
+      queue.enqueue(copy_grid[row][col - 1]);
     }
-    if (col + 1 < copy_grid[0].length && copy_grid[row][col + 1].type !== 'visited') {
-      queue.enqueue(copy_grid[row][col + 1])
+    if (
+      col + 1 < copy_grid[0].length &&
+      copy_grid[row][col + 1].type !== "visited"
+    ) {
+      queue.enqueue(copy_grid[row][col + 1]);
     }
     passes++;
   }
 
-  console.log(passes)
-  return visitedcells
+  console.log(passes);
+  return visitedcells;
 }
 
-function markVisited(visitedCells, index, prevGrid) {
-  let row = visitedCells[index].row
-  let col = visitedCells[index].col
+function useUpdateGridCellsSequentially(setGridState, updateCell) {
+  const [cellsIndex, setCellsIndex] = useState(null);
+  const cellsRef = useRef([]);
+  const updateCellRef = useRef(updateCell);
 
-  prevGrid[row][col].type = 'visited'
-  return [...prevGrid]
+  useEffect(() => {
+    const cells = cellsRef.current;
+    if (cells.length === 0 || cellsIndex === null) {
+      return;
+    }
+    if (cellsIndex === cells.length) {
+      cellsRef.current = [];
+      setCellsIndex(null);
+      return;
+    }
+    setGridState((prevGrid) => {
+      let row = cells[cellsIndex].row;
+      let col = cells[cellsIndex].col;
+      let cell = prevGrid[row][col]
+      updateCellRef.current(cell)
+      return [...prevGrid];
+    });
+    setCellsIndex(cellsIndex + 1);
+  }, [setGridState, cellsIndex]);
+
+  const setGridCellsToUpdate = (cells) => {
+    cellsRef.current = cells;
+    setCellsIndex(0);
+  };
+
+  return setGridCellsToUpdate;
 }
 
 function App() {
   const [grid, setGrid] = useState(setUpInitialGrid());
-  const [selectedAlgo, setSelectedAlgo] = React.useState('Choose Algorithm');
-  const [visitedIndex, setVisitedIndex] = useState(null)
-  const [visitedCells, setVisitedCells] = useState([])
-
-  useEffect(() => {
-    if (visitedCells.length === 0) {
-      return
-    }
-    if (visitedIndex === null) {
-      setVisitedIndex(0)
-      return
-    }
-    if (visitedIndex === visitedCells.length){
-      setVisitedCells([])
-      setVisitedIndex(null)
-      return
-    }
-    setGrid(prevGrid => {
-      return markVisited(visitedCells, visitedIndex, prevGrid)
-    })
-    setVisitedIndex(visitedIndex+1)
-  },
-    [visitedIndex, visitedCells])
+  const [selectedAlgo, setSelectedAlgo] = React.useState("Choose Algorithm");
+  const setVisitedGridCellsToUpdateSequentially = useUpdateGridCellsSequentially(setGrid, (cell) => cell.type = 'visited');
 
   const onResetBoardClick = () => {
     setGrid((prevGrid) =>
@@ -131,12 +139,12 @@ function App() {
   };
 
   const onVisualizeClick = () => {
-    setVisitedCells(visitAll(grid));
-  }
+    setVisitedGridCellsToUpdateSequentially(visitAll(grid));
+  };
 
   function changeAlgorithm(algo) {
-    console.log(algo)
-    setSelectedAlgo(algo)
+    console.log(algo);
+    setSelectedAlgo(algo);
   }
 
   return (
