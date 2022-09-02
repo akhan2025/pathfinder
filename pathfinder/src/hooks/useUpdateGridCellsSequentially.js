@@ -26,11 +26,16 @@ function useUpdateGridCellsSequentially(setGridState, updateCell) {
   }, [setGridState, cellsIndex]);
 
   const setGridCellsToUpdate = (cells) => {
+    if (cells === null || cells.length === 0) {
+      return;
+    }
     cellsRef.current = cells;
     setCellsIndex(0);
   };
 
-  return setGridCellsToUpdate;
+  const areGridCellsUpdating = cellsIndex !== null;
+
+  return [areGridCellsUpdating, setGridCellsToUpdate];
 }
 
 export default useUpdateGridCellsSequentially;

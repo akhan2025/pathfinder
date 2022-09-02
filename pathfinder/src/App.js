@@ -38,7 +38,7 @@ function setUpInitialGrid() {
 function App() {
   const [grid, setGrid] = useState(setUpInitialGrid());
   const [selectedAlgo, setSelectedAlgo] = React.useState("Choose Algorithm");
-  const setVisitedGridCellsToUpdateSequentially =
+  const [areVisitedGridCellsUpdating, setVisitedGridCellsToUpdateSequentially] =
     useUpdateGridCellsSequentially(setGrid, (cell) => (cell.type = "visited"));
 
   const onResetBoardClick = () => {
@@ -97,7 +97,9 @@ function App() {
       <Box gridArea="card">
         <MainSideBar
           onResetBoardClick={onResetBoardClick}
+          resetBoardButtonDisabled={areVisitedGridCellsUpdating}
           onVisualizeClick={onVisualizeClick}
+          visualizeButtonDisabled={areVisitedGridCellsUpdating}
           changeAlgorithm={changeAlgorithm}
           selectedAlgo={selectedAlgo}
         />
