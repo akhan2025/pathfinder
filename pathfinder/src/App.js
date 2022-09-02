@@ -45,8 +45,8 @@ function setUpInitialGrid() {
 function App() {
   const [grid, setGrid] = useState(setUpInitialGrid());                           // Initializes the grid as a state and provides a setter function using the statehook
   const [selectedAlgo, setSelectedAlgo] = React.useState("Choose Algorithm");     // Initializes the selectAlgo as a state and provides a setter function using the statehook
-  const [areVisitedGridCellsUpdating, setVisitedGridCellsToUpdateSequentially] =                                 
-    useUpdateGridCellsSequentially(setGrid, (cell) => (cell.type = "visited"));
+  const [areVisitedGridCellsUpdating, setVisitedGridCellsToUpdateSequentially] =  // We can use the first value as a check to see if visualizing/clearing grid is legal
+    useUpdateGridCellsSequentially(setGrid, (cell) => (cell.type = "visited"));   // and the second value is to update the grid
 
   const onResetBoardClick = () => {                                               // Provides function for Resetting the Board by mapping all visited cells as unvisited
     setGrid((prevGrid) =>                                                         // Passed as prop to MainSideBar to attach to 'Clear Board' button see line 105
