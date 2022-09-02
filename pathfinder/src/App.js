@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import InitializeGridBoard from "./component/grid/Grid";
 import { Box, Grid } from "grommet";
@@ -6,6 +6,8 @@ import MainSideBar from "./StartCard";
 import Nav from "./Navbar";
 import BFS from "./algorithms/BFS";
 import DFS from "./algorithms/DFS";
+import useUpdateGridCellsSequentially from "./hooks/useUpdateGridCellsSequentially";
+
 
 const GRID_HEIGHT = 20;
 const GRID_WIDTH = 30;
@@ -35,43 +37,10 @@ function setUpInitialGrid() {
   return initialGrid;
 }
 
-function useUpdateGridCellsSequentially(setGridState, updateCell) {
-  const [cellsIndex, setCellsIndex] = useState(null);
-  const cellsRef = useRef([]);
-  const updateCellRef = useRef(updateCell);
-
-  useEffect(() => {
-    const cells = cellsRef.current;
-    if (cells.length === 0 || cellsIndex === null) {
-      return;
-    }
-    if (cellsIndex === cells.length) {
-      cellsRef.current = [];
-      setCellsIndex(null);
-      return;
-    }
-    setGridState((prevGrid) => {
-      let row = cells[cellsIndex].row;
-      let col = cells[cellsIndex].col;
-      let cell = prevGrid[row][col];
-      updateCellRef.current(cell);
-      return [...prevGrid];
-    });
-    setCellsIndex(cellsIndex + 1);
-  }, [setGridState, cellsIndex]);
-
-  const setGridCellsToUpdate = (cells) => {
-    cellsRef.current = cells;
-    setCellsIndex(0);
-  };
-
-  return setGridCellsToUpdate;
-}
-
 function App() {
   const [grid, setGrid] = useState(setUpInitialGrid());
   const [selectedAlgo, setSelectedAlgo] = React.useState("Choose Algorithm");
-  const setVisitedGridCellsToUpdateSequentially =
+  const [areVisitedGridCellsUpdating, setVisitedGridCellsToUpdateSequentially] =
     useUpdateGridCellsSequentially(setGrid, (cell) => (cell.type = "visited"));
 
   const onResetBoardClick = () => {
@@ -87,7 +56,7 @@ function App() {
   };
 
   const onVisualizeClick = () => {
-    const in_progress = "under contruction! 👷‍♂️🚧"
+    const in_progress = "under contruction! 👷‍♂️🚧";
 
     switch (selectedAlgo) {
       case "BFS":
@@ -102,11 +71,10 @@ function App() {
       case "A*":
         alert(in_progress);
         break;
-      default:
-        alert("Please select an Algo!") // change this to a Grommet component
+      default: // change this to a Grommet component
+        alert("Please select an Algo!");
         break;
     }
-    
   };
 
   function changeAlgorithm(algo) {
@@ -131,7 +99,9 @@ function App() {
       <Box gridArea="card">
         <MainSideBar
           onResetBoardClick={onResetBoardClick}
+          resetBoardButtonDisabled={areVisitedGridCellsUpdating}
           onVisualizeClick={onVisualizeClick}
+          visualizeButtonDisabled={areVisitedGridCellsUpdating}
           changeAlgorithm={changeAlgorithm}
           selectedAlgo={selectedAlgo}
         />
