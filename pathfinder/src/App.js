@@ -7,71 +7,52 @@ import Nav from "./Navbar";
 import BFS from "./algorithms/BFS";
 import DFS from "./algorithms/DFS";
 import useUpdateGridCellsSequentially from "./hooks/useUpdateGridCellsSequentially";
+import { resetVisitedCells, setUpInitialGrid } from "./util/GridUtil";
 
 // Set size of grid
 const GRID_HEIGHT = 20;
 const GRID_WIDTH = 30;
 
 // Set initial starting location
-let S_ROW = Math.floor(GRID_HEIGHT / 4);
-let S_COL = Math.floor(GRID_WIDTH / 4);
+const S_ROW = Math.floor(GRID_HEIGHT / 4);
+const S_COL = Math.floor(GRID_WIDTH / 4);
 
-/**
- * Creates the initial Grid object from the initial settings
- */ 
-function setUpInitialGrid() {
-  const initialGrid = [];
-  for (let row = 0; row < GRID_HEIGHT; row++) {
-    initialGrid.push([]);
-    for (let col = 0; col < GRID_WIDTH; col++) {
-      initialGrid[row].push({
-        type: "unvisited",
-        row: row,
-        col: col,
-      });
-    }
-  }
-  console.log("starting cell: ", S_ROW, S_COL);
-  initialGrid[S_ROW][S_COL].type = "start";
-
-  //calulates the initial location for target
-  let T_ROW = Math.floor(GRID_HEIGHT - 4);
-  let T_COL = Math.floor(GRID_WIDTH - 4);
-  initialGrid[T_ROW][T_COL].type = "target";
-
-  return initialGrid;
-}
+// calculates the initial location for target
+const T_ROW = Math.floor(GRID_HEIGHT - 4);
+const T_COL = Math.floor(GRID_WIDTH - 4);
 
 /**
  * Main function from which everything else runs
  */
 function App() {
-  const [grid, setGrid] = useState(setUpInitialGrid());                           // Initializes the grid as a state and provides a setter function using the statehook
-  const [selectedAlgo, setSelectedAlgo] = React.useState("Choose Algorithm");     // Initializes the selectAlgo as a state and provides a setter function using the statehook
-  const [areVisitedGridCellsUpdating, setVisitedGridCellsToUpdateSequentially] =  // We can use the first value as a check to see if visualizing/clearing grid is legal
-    useUpdateGridCellsSequentially(setGrid, (cell) => (cell.type = "visited"));   // and the second value is to update the grid
+  // Initializes the grid as a state and provides a setter function using the statehook
+  const [grid, setGrid] = useState(() => {
+    const startPos = { row: S_ROW, col: S_COL };
+    const targetPos = { row: T_ROW, col: T_COL };
+    return setUpInitialGrid(GRID_HEIGHT, GRID_WIDTH, startPos, targetPos);
+  });
 
-  const onResetBoardClick = useCallback(() => {                                   // Provides function for Resetting the Board by mapping all visited cells as unvisited
-    setGrid((prevGrid) =>                                                         // Passed as prop to MainSideBar to attach to 'Clear Board' button
-      prevGrid.map((row) =>
-        row.map((gridCell) =>
-          gridCell.type === "visited"
-            ? { ...gridCell, type: "unvisited" }
-            : gridCell
-        )
-      )
-    );
+  const [selectedAlgo, setSelectedAlgo] = React.useState("Choose Algorithm"); // Initializes the selectAlgo as a state and provides a setter function using the statehook
+  const [areVisitedGridCellsUpdating, setVisitedGridCellsToUpdateSequentially] = // We can use the first value as a check to see if visualizing/clearing grid is legal
+    useUpdateGridCellsSequentially(setGrid, (cell) => (cell.type = "visited")); // and the second value is to update the grid
+
+  // Provides function for Resetting the Board by mapping all visited cells as unvisited
+  // Passed as prop to MainSideBar to attach to 'Clear Board' button
+  const onResetBoardClick = useCallback(() => {
+    setGrid((prevGrid) => resetVisitedCells(prevGrid));
   }, []);
 
-  const onVisualizeClick = useCallback(() => {                                   // Calls the algorithm selected to be visualized on the graph
-    const in_progress = "under contruction! 👷‍♂️🚧";                                // Passed as prop to MainSideBar to attach to 'Visualize' button
-
+  // Calls the algorithm selected to be visualized on the graph
+  // Passed as prop to MainSideBar to attach to 'Visualize' button
+  const onVisualizeClick = useCallback(() => {
+    const in_progress = "under contruction! 👷‍♂️🚧";
+    let pathfinderAlgo = null;
     switch (selectedAlgo) {
       case "BFS":
-        setVisitedGridCellsToUpdateSequentially(BFS(grid, S_ROW, S_COL));
+        pathfinderAlgo = BFS;
         break;
       case "DFS":
-        setVisitedGridCellsToUpdateSequentially(DFS(grid, S_ROW, S_COL));
+        pathfinderAlgo = DFS;
         break;
       case "Dijkstras":
         alert(in_progress);
@@ -83,9 +64,20 @@ function App() {
         alert("Please select an Algo!");
         break;
     }
+
+    if (pathfinderAlgo === null) {
+      return;
+    }
+
+    const resetGrid = resetVisitedCells(grid);
+    setGrid(resetGrid);
+    setVisitedGridCellsToUpdateSequentially(
+      pathfinderAlgo(resetGrid, S_ROW, S_COL)
+    );
   }, [grid, selectedAlgo, setVisitedGridCellsToUpdateSequentially]);
 
-  const changeAlgorithm = useCallback((algo) => {                                // Passed as prop to MainSideBar to attach to dropdown
+  const changeAlgorithm = useCallback((algo) => {
+    // Passed as prop to MainSideBar to attach to dropdown
     setSelectedAlgo(algo);
   }, []);
 
@@ -105,9 +97,13 @@ function App() {
       </Box>
       <Box gridArea="card">
         <MainSideBar
-          onResetBoardClick={areVisitedGridCellsUpdating ? null : onResetBoardClick}
+          onResetBoardClick={
+            areVisitedGridCellsUpdating ? null : onResetBoardClick
+          }
           resetBoardButtonDisabled={areVisitedGridCellsUpdating}
-          onVisualizeClick={areVisitedGridCellsUpdating ? null : onVisualizeClick}
+          onVisualizeClick={
+            areVisitedGridCellsUpdating ? null : onVisualizeClick
+          }
           visualizeButtonDisabled={areVisitedGridCellsUpdating}
           changeAlgorithm={changeAlgorithm}
           selectedAlgo={selectedAlgo}

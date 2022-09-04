@@ -1,3 +1,4 @@
+import { deepCopyGrid } from "../util/GridUtil";
 import Queue from "./Queue";
 
 /**
@@ -10,15 +11,12 @@ import Queue from "./Queue";
  */
 function BFS(grid, S_ROW, S_COL) {
 
-  let copy_grid = grid.map((row) =>    		// Create a copy of grid so we don't change the component directly                              
-    row.map((gridCell) => {
-      return { ...gridCell };
-    })
-  );
+ // Create a copy of grid so we don't change the component directly
+  grid = deepCopyGrid(grid);
 
   const queue = new Queue();              //Initialize queue and push starting cell onto it
   console.log("created queue");
-  queue.enqueue(copy_grid[S_ROW][S_COL]);
+  queue.enqueue(grid[S_ROW][S_COL]);
   console.log("enqueued start");
 
   let visitedcells = [];
@@ -39,23 +37,23 @@ function BFS(grid, S_ROW, S_COL) {
     let row = cell.row;
     let col = cell.col;
 
-    if (row - 1 >= 0 && copy_grid[row - 1][col].type !== "visited") {
-      queue.enqueue(copy_grid[row - 1][col]);
+    if (row - 1 >= 0 && grid[row - 1][col].type !== "visited") {
+      queue.enqueue(grid[row - 1][col]);
     }
     if (
-      row + 1 < copy_grid.length &&
-      copy_grid[row + 1][col].type !== "visited"
+      row + 1 < grid.length &&
+      grid[row + 1][col].type !== "visited"
     ) {
-      queue.enqueue(copy_grid[row + 1][col]);
+      queue.enqueue(grid[row + 1][col]);
     }
-    if (col - 1 >= 0 && copy_grid[row][col - 1].type !== "visited") {
-      queue.enqueue(copy_grid[row][col - 1]);
+    if (col - 1 >= 0 && grid[row][col - 1].type !== "visited") {
+      queue.enqueue(grid[row][col - 1]);
     }
     if (
-      col + 1 < copy_grid[0].length &&
-      copy_grid[row][col + 1].type !== "visited"
+      col + 1 < grid[0].length &&
+      grid[row][col + 1].type !== "visited"
     ) {
-      queue.enqueue(copy_grid[row][col + 1]);
+      queue.enqueue(grid[row][col + 1]);
     }
   }
 
