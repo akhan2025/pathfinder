@@ -42,6 +42,13 @@ function App() {
   const [selectedAlgo, setSelectedAlgo] = React.useState("Choose Algorithm");
   const [areVisitedGridCellsUpdating, setVisitedGridCellsToUpdateSequentially] =
     useUpdateGridCellsSequentially(setGrid, (cell) => (cell.type = "visited"));
+  const [
+    areShortestGridCellsUpdating,
+    setShortestGridCellsToUpdateSequentially,
+  ] = useUpdateGridCellsSequentially(
+    setGrid,
+    (cell) => (cell.type = "shortest")
+  );
 
   const onResetBoardClick = () => {
     setGrid((prevGrid) =>
@@ -75,7 +82,11 @@ function App() {
         alert("Please select an Algo!");
         break;
     }
-    const shortestPathOrder = getShortestPath(grid[T_ROW][T_COL]);
+    const shortestPathOrder = getShortestPath(
+      grid[T_ROW][T_COL],
+      grid[S_ROW][S_COL]
+    );
+    setShortestGridCellsToUpdateSequentially(shortestPathOrder);
   };
 
   function changeAlgorithm(algo) {
@@ -83,11 +94,13 @@ function App() {
     setSelectedAlgo(algo);
   }
 
-  function getShortestPath(finishCell) {
+  function getShortestPath(finishCell, startCell) {
+    setTimeout(1000);
     const shortestPath = [];
     let currentCell = finishCell;
-    while (currentCell !== null) {
-      console.log("Finish Cell");
+    while (currentCell !== startCell) {
+      console.log("please");
+      currentCell.type = "shortest";
       shortestPath.unshift(currentCell);
       currentCell = currentCell.previous;
     }
